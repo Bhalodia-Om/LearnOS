@@ -14,6 +14,7 @@ Each lesson has its own numbered folder and adds one new feature on top of the l
 | 02 | Text Output | A moving cursor for typing, `putchar`/`print`, newlines and wrapping |
 | 03 | Text Input | Reading the keyboard: scancodes, `getchar`, `read_line` |
 | 04 | Print Numbers | Turning integers into on-screen digits |
+| 05 | String helpers | Create helpers for strings and memory |
 
 ## Building and running a lesson
 
