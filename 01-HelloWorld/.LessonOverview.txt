@@ -1,0 +1,6 @@
+This lesson will involve writing the first code run when our OS loads, and printing out a simple hello world!
+
+Files changed:
+- all
+
+Changed files will only contain comments for changes that are new to this lesson.

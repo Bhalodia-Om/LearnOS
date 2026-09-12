@@ -1,0 +1,6 @@
+This lesson will involve printing numbers to the screen. So far we can only print text (strings); this lesson adds the ability to turn an integer into digits and display it.
+
+Files changed:
+- kernel.cpp
+
+Changed files will only contain comments for changes that are new to this lesson.

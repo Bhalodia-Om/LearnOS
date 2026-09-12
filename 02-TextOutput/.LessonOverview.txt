@@ -1,0 +1,8 @@
+This lesson will involve improving text output, to allow us to output onto multiple lines, like a terminal response.
+
+
+
+Files changed:
+- kernel.cpp
+
+Changed files will only contain comments for changes that are new to this lesson.

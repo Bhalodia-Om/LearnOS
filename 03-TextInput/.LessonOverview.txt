@@ -1,0 +1,6 @@
+This lesson will involve adding input features, allowing the user to input their name.
+
+Files changed:
+- kernel.cpp
+
+Changed files will only contain comments for changes that are new to this lesson.

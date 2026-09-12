@@ -1,0 +1,8 @@
+This lesson will involve building our own string and memory helper functions (strlen, strcmp, memcpy, memset). We have no standard library, so we must write these ourselves. Later lessons (networking especially) lean on them constantly.
+
+We also add atoi, which turns a typed string like "426" into the actual number 426. This is the inverse of print_int, and it lets us read numbers from the keyboard.
+
+Files changed:
+- kernel.cpp
+
+Changed files will only contain comments for changes that are new to this lesson.
