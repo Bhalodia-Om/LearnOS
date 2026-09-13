@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
-  <title>LeveretOS , Lesson 08: Restructure</title>
+  <title>LeveretOS, Lesson 08: Restructure</title>
   <meta name="description" content="Lesson 08 of LeveretOS: splitting the kernel into multiple files and headers. Same behaviour as lesson 7, cleaner code." />
   <style>
     :root {
@@ -61,10 +61,10 @@
 
     <h2>What this lesson adds</h2>
     <p>
-      No new features , this lesson reorganizes the growing single <code>kernel.cpp</code> into
+      No new features, this lesson reorganizes the growing single <code>kernel.cpp</code> into
       separate files (<code>vga</code>, <code>keyboard</code>, <code>string</code>, <code>io</code>,
       and <code>kernel</code>), each with a header that declares what the others can use. It
-      introduces header files, include guards, and <code>extern</code> for shared globals , the
+      introduces header files, include guards, and <code>extern</code> for shared globals, the
       structure every later lesson (the GDT, interrupts, memory, networking) builds on.
     </p>
 
@@ -80,8 +80,8 @@
     <div class="emu-wrap">
       <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 08)</button>
       <div class="status" id="status"></div>
-      <div class="interactive" id="note-desktop">This lesson is interactive , <strong>click inside the screen</strong> and press r, p, or s to play.</div>
-      <div class="interactive" id="note-touch" style="display:none">This lesson is interactive , tap <strong>Tap to type</strong> below, then press r, p, or s to play.</div>
+      <div class="interactive" id="note-desktop">This lesson is interactive, <strong>click inside the screen</strong> and press r, p, or s to play.</div>
+      <div class="interactive" id="note-touch" style="display:none">This lesson is interactive, tap <strong>Tap to type</strong> below, then press r, p, or s to play.</div>
       <div id="screen_container">
         <div></div>
         <canvas style="display:none"></canvas>
