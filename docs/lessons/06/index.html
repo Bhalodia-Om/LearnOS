@@ -104,7 +104,7 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/v86@latest/build/libv86.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/v86@0.5.460/build/libv86.js"></script>
   <script>
     document.getElementById("boot").addEventListener("click", function () {
       var btn = this;
@@ -116,12 +116,12 @@
 
       // v86 needs a BIOS + VGA BIOS blob; served from the same CDN as the library.
       var emulator = new V86({
-        wasm_path: "https://cdn.jsdelivr.net/npm/v86@latest/build/v86.wasm",
+        wasm_path: "https://cdn.jsdelivr.net/npm/v86@0.5.460/build/v86.wasm",
         memory_size: 32 * 1024 * 1024,
         vga_memory_size: 2 * 1024 * 1024,
         screen_container: document.getElementById("screen_container"),
-        bios:     { url: "https://cdn.jsdelivr.net/npm/v86@latest/bios/seabios.bin" },
-        vga_bios: { url: "https://cdn.jsdelivr.net/npm/v86@latest/bios/vgabios.bin" },
+        bios:     { url: "https://cdn.jsdelivr.net/gh/copy/v86@latest/bios/seabios.bin" },
+        vga_bios: { url: "https://cdn.jsdelivr.net/gh/copy/v86@latest/bios/vgabios.bin" },
         cdrom:    { url: "LeveretOS-Scrolling.iso" },   // the ISO sits next to this page
         autostart: true,
       });
