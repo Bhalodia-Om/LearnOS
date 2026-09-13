@@ -141,17 +141,23 @@
     /* ---- "Why LeveretOS" name section ---- */
     .name-box {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 28px;
       margin-top: 20px;
     }
+    .name-box p { padding-top: 8px; }
     .name-box img.leveret {
-      width: 200px;
-      height: 200px;
+      width: 210px;
+      height: 210px;
       object-fit: cover;
       border-radius: 50%;
       flex-shrink: 0;
-      border: 1px solid var(--border);
+      border: 3px solid var(--bg);   /* ring in page color so it reads as lifted */
+      box-shadow: 0 0 0 1px var(--border);
+      /* pull the circle up so it overlaps the header line and fills the gap */
+      margin-top: -78px;
+      position: relative;
+      z-index: 2;
     }
     .name-box p { margin: 0; }
     .photo-credit {
@@ -162,7 +168,7 @@
     }
     @media (max-width: 520px) {
       .name-box { flex-direction: column; text-align: center; }
-      .name-box img.leveret { width: 180px; height: 180px; }
+      .name-box img.leveret { width: 180px; height: 180px; margin-top: 0; }
       .photo-credit { text-align: center; }
     }
 
