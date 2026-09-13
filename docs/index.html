@@ -171,10 +171,18 @@
     pre code .cmt { color: var(--muted); }
 
     /* ---- Lessons table ---- */
+    h3.phase {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin: 32px 0 0;
+    }
+    h3.phase:first-of-type { margin-top: 20px; }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 18px;
+      margin-top: 10px;
       font-size: 0.95rem;
     }
     th, td {
@@ -248,6 +256,26 @@
       .photo-credit { text-align: center; }
     }
 
+    /* ---- Emulator (Try the latest build) ---- */
+    .emu-wrap { margin-top: 18px; }
+    .interactive { background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 12px 16px; color: #c9d1d9; margin-top: 16px; font-size: 0.92rem; }
+    #screen_container { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 8px; overflow: auto; display: none; scrollbar-width: thin; scrollbar-color: #30363d #000; }
+    #screen_container::-webkit-scrollbar { width: 8px; height: 8px; }
+    #screen_container::-webkit-scrollbar-thumb { background: #30363d; border-radius: 8px; }
+    #screen_container::-webkit-scrollbar-track { background: #000; }
+    #screen_container div { white-space: pre; font: 14px monospace; line-height: 14px; color: #fff; }
+    #screen_container canvas { display: block; }
+    .boot-btn { display: inline-block; padding: 12px 24px; border-radius: 8px; border: 1px solid var(--accent-dim);
+      background: var(--accent-dim); color: #fff; font-weight: 600; font-size: 0.95rem; cursor: pointer; }
+    .boot-btn:hover { border-color: var(--accent); }
+    .boot-note { color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
+    .status { color: var(--accent); font-size: 0.9rem; margin-top: 12px; min-height: 1.2em; }
+    .type-btn { display: block; width: 100%; margin-top: 12px; padding: 13px 18px; border-radius: 8px;
+      border: 1px solid var(--accent-dim); background: transparent; color: var(--accent); font-weight: 600;
+      font-size: 0.95rem; cursor: pointer; transition: background 0.12s ease, border-color 0.12s ease; }
+    .type-btn:hover { background: var(--panel); border-color: var(--accent); }
+    #kbd-proxy { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
     footer {
       margin-top: 70px;
       padding-top: 24px;
@@ -274,6 +302,27 @@
         <a class="btn btn-secondary" href="#lessons">See the lessons</a>
       </div>
     </header>
+
+    <section>
+      <h2>Try the latest build</h2>
+      <p>
+        Boot the newest version of LeveretOS right here in your browser , no install, nothing to
+        download but a few MB of emulator. It runs the same ISO as the most recent lesson.
+      </p>
+      <div class="emu-wrap">
+        <button class="boot-btn" id="boot">&#9654; Boot the latest LeveretOS</button>
+        <div class="status" id="status"></div>
+        <div class="interactive" id="note-desktop">The current build is the Rock Paper Scissors game , <strong>click inside the screen</strong> and press r, p, or s.</div>
+        <div class="interactive" id="note-touch" style="display:none">The current build is the Rock Paper Scissors game , tap <strong>Tap to type</strong> below, then press r, p, or s.</div>
+        <div id="screen_container">
+          <div></div>
+          <canvas style="display:none"></canvas>
+        </div>
+        <button class="type-btn" id="typebtn" style="display:none">Tap to type</button>
+        <input id="kbd-proxy" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-hidden="true" />
+        <p class="boot-note">Emulated in your browser with <a href="https://github.com/copy/v86">v86</a>.</p>
+      </div>
+    </section>
 
     <section>
       <h2>The idea</h2>
@@ -304,10 +353,9 @@
 
     <section id="lessons">
       <h2>Lessons so far</h2>
+
+      <h3 class="phase">Fundamentals</h3>
       <table>
-        <thead>
-          <tr><th>#</th><th>Lesson</th><th>What it adds</th><th></th></tr>
-        </thead>
         <tbody>
           <tr onclick="location.href='lessons/01/'"><td class="num">01</td><td class="name">Hello World</td><td class="desc">Booting via GRUB and writing text to VGA memory</td><td class="boot">Boot &rarr;</td></tr>
           <tr onclick="location.href='lessons/02/'"><td class="num">02</td><td class="name">Text Output</td><td class="desc">A moving cursor for typing, putchar/print, newlines and wrapping</td><td class="boot">Boot &rarr;</td></tr>
@@ -316,6 +364,12 @@
           <tr onclick="location.href='lessons/05/'"><td class="num">05</td><td class="name">String helpers</td><td class="desc">Create helpers for strings and memory</td><td class="boot">Boot &rarr;</td></tr>
           <tr onclick="location.href='lessons/06/'"><td class="num">06</td><td class="name">Scrolling</td><td class="desc">Shift lines up when text reaches the bottom, like a real terminal</td><td class="boot">Boot &rarr;</td></tr>
           <tr onclick="location.href='lessons/07/'"><td class="num">07</td><td class="name">Rock Paper Scissors</td><td class="desc">A playable terminal game, built from everything so far</td><td class="boot">Boot &rarr;</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="phase">CPU Plumbing</h3>
+      <table>
+        <tbody>
           <tr onclick="location.href='lessons/08/'"><td class="num">08</td><td class="name">Restructure</td><td class="desc">Split the kernel into multiple files and headers (same behaviour)</td><td class="boot">Boot &rarr;</td></tr>
         </tbody>
       </table>
@@ -377,5 +431,75 @@ qemu-system-i386 -cdrom 06-Scrolling/build/LeveretOS-Scrolling.iso</code></pre>
       <a href="https://github.com/Bhalodia-Om/LeveretOS">github.com/Bhalodia-Om/LeveretOS</a>
     </footer>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/v86@0.5.460/build/libv86.js"></script>
+  <script>
+    var IS_TOUCH = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
+    document.getElementById("note-desktop").style.display = IS_TOUCH ? "none" : "block";
+    document.getElementById("note-touch").style.display   = IS_TOUCH ? "block" : "none";
+
+    var SCAN = {
+      a:0x1E,b:0x30,c:0x2E,d:0x20,e:0x12,f:0x21,g:0x22,h:0x23,i:0x17,j:0x24,
+      k:0x25,l:0x26,m:0x32,n:0x31,o:0x18,p:0x19,q:0x10,r:0x13,s:0x1F,t:0x14,
+      u:0x16,v:0x2F,w:0x11,x:0x2D,y:0x15,z:0x2C,
+      "0":0x0B,"1":0x02,"2":0x03,"3":0x04,"4":0x05,"5":0x06,"6":0x07,"7":0x08,"8":0x09,"9":0x0A,
+      " ":0x39, "-":0x0C
+    };
+    var ENTER = 0x1C, BACKSPACE = 0x0E, LSHIFT = 0x2A;
+
+    function sendChar(emulator, ch) {
+      if (ch === "\n" || ch === "\r") { emulator.keyboard_send_scancodes([ENTER, ENTER | 0x80]); return; }
+      var lower = ch.toLowerCase();
+      var code = SCAN[lower];
+      if (code === undefined) return;
+      var upper = (ch !== lower);
+      var seq = [];
+      if (upper) seq.push(LSHIFT);
+      seq.push(code, code | 0x80);
+      if (upper) seq.push(LSHIFT | 0x80);
+      emulator.keyboard_send_scancodes(seq);
+    }
+
+    document.getElementById("boot").addEventListener("click", function () {
+      var btn = this, status = document.getElementById("status");
+      var typeBtn = document.getElementById("typebtn");
+      var proxy = document.getElementById("kbd-proxy");
+      btn.disabled = true; btn.style.opacity = 0.6;
+      status.textContent = "Loading emulator…";
+      document.getElementById("screen_container").style.display = "block";
+      var emulator = new V86({
+        wasm_path: "https://cdn.jsdelivr.net/npm/v86@0.5.460/build/v86.wasm",
+        memory_size: 32 * 1024 * 1024,
+        vga_memory_size: 2 * 1024 * 1024,
+        screen_container: document.getElementById("screen_container"),
+        bios:     { url: "https://cdn.jsdelivr.net/gh/copy/v86@latest/bios/seabios.bin" },
+        vga_bios: { url: "https://cdn.jsdelivr.net/gh/copy/v86@latest/bios/vgabios.bin" },
+        cdrom:    { url: "latest.iso" },   // always the newest build
+        autostart: true,
+      });
+      emulator.add_listener("emulator-ready", function () { status.textContent = "Booting…"; });
+      emulator.add_listener("emulator-started", function () {
+        setTimeout(function () { status.textContent = ""; }, 3000);
+        if (IS_TOUCH) { typeBtn.style.display = "block"; }
+      });
+
+      typeBtn.addEventListener("click", function () {
+        proxy.focus();
+        setTimeout(function () {
+          document.getElementById("screen_container").scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 350);
+      });
+
+      proxy.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") { sendChar(emulator, "\n"); e.preventDefault(); }
+        else if (e.key === "Backspace") { emulator.keyboard_send_scancodes([BACKSPACE, BACKSPACE | 0x80]); e.preventDefault(); }
+      });
+      proxy.addEventListener("input", function () {
+        var val = proxy.value;
+        for (var i = 0; i < val.length; i++) { sendChar(emulator, val[i]); }
+        proxy.value = "";
+      });
+    });
+  </script>
 </body>
 </html>
