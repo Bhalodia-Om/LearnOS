@@ -1,0 +1,4 @@
+# Shell scripts and the Dockerfile must use LF line endings so they work inside
+# Linux containers and on Unix hosts (CRLF breaks bash scripts with "\r" errors).
+*.sh    text eol=lf
+Dockerfile text eol=lf

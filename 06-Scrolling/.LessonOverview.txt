@@ -1,0 +1,7 @@
+This lesson adds scrolling. Until now, printing past the bottom row (row 25) wrote beyond the screen into memory we don't have assigned. 
+Now, when the cursor goes past the last row, we shift every line up by one and keep writing on the last line.
+
+Files changed:
+- kernel.cpp
+
+Changed files will only contain comments for changes that are new to this lesson.

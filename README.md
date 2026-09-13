@@ -22,6 +22,23 @@ Each lesson folder is self-contained and includes a `build.sh` that assembles th
 
 A good guide for setting up the necessary software to be able to boot: [OSDev Bare Bones](https://wiki.osdev.org/Bare_Bones)
 
+## Building with Docker (macOS, Windows, or Linux)
+
+If you don't want to install the toolchain by hand, the included `Dockerfile` provides the exact Linux build environment. You only need [Docker](https://www.docker.com/) to build, and [QEMU](https://www.qemu.org/) to run.
+
+```bash
+# From the repo root, build the toolchain container once:
+docker build -t leveretos .
+
+# Build a lesson's ISO inside the container (example: lesson 06):
+docker run --rm -v "$PWD":/src -w /src/06-Scrolling leveretos ./build-iso.sh
+
+# Run the resulting ISO with QEMU on your own machine:
+qemu-system-i386 -cdrom 06-Scrolling/build/LeveretOS-Scrolling.iso
+```
+
+The ISO is built inside the container but written to the lesson's `build/` folder on your machine, so you run it with QEMU on the host. On macOS, install QEMU with `brew install qemu` (on Apple Silicon the 32-bit PC is emulated in software, which is fine for a small OS).
+
 ## The goal
 
 The current goal is to create an educational OS that can connect to the web.
