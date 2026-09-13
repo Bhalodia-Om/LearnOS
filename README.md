@@ -1,6 +1,6 @@
 # LeveretOS
 
-**LeveretOS** is a small operating system built completely from scratch, one lesson at a time. Every file is commented for beginners, so the repository doubles as a step-by-step guide to how an OS actually works, starting from the very first instruction that runs at boot.
+**LeveretOS** is a small educational operating system built completely from scratch, with each new addition split into a separate lesson. Every change is commented for beginners, so this repository doubles as a step-by-step guide to how an OS actually works, starting from the very first instruction that runs at boot.
 
 ## The idea
 
