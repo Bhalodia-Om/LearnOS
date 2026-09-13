@@ -41,6 +41,27 @@
     .boot-btn:hover { border-color: var(--accent); }
     .boot-note { color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
     .status { color: var(--accent); font-size: 0.9rem; margin-top: 12px; min-height: 1.2em; }
+    .type-btn {
+      margin-top: 12px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .type-btn:hover { border-color: var(--accent); }
+    /* Off-screen but focusable, so tapping it opens the iOS keyboard.
+       Must NOT be display:none / visibility:hidden or iOS won't show the keyboard. */
+    #kbd-proxy {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
   </style>
 </head>
 <body>
@@ -63,11 +84,13 @@
     <div class="emu-wrap">
       <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 03)</button>
       <div class="status" id="status"></div>
-      <div class="interactive">This lesson is interactive , once it boots, <strong>click inside the screen</strong> and type your name, then press Enter.</div>
+      <div class="interactive">This lesson is interactive. On a computer, <strong>click inside the screen</strong> and type. On a phone, tap <strong>&#9000; Tap to type</strong> below to bring up your keyboard.</div>
       <div id="screen_container">
         <div></div>
         <canvas style="display:none"></canvas>
       </div>
+      <button class="type-btn" id="typebtn" style="display:none">&#9000; Tap to type</button>
+      <input id="kbd-proxy" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-hidden="true" />
       <p class="boot-note">Emulated in your browser, nothing is installed. The emulator + ISO take a few moments to load.</p>
     </div>
 
@@ -79,8 +102,34 @@
 
   <script src="https://cdn.jsdelivr.net/npm/v86@0.5.460/build/libv86.js"></script>
   <script>
+    // --- Set 1 scancodes for the keys our lessons use ---
+    var SCAN = {
+      a:0x1E,b:0x30,c:0x2E,d:0x20,e:0x12,f:0x21,g:0x22,h:0x23,i:0x17,j:0x24,
+      k:0x25,l:0x26,m:0x32,n:0x31,o:0x18,p:0x19,q:0x10,r:0x13,s:0x1F,t:0x14,
+      u:0x16,v:0x2F,w:0x11,x:0x2D,y:0x15,z:0x2C,
+      "0":0x0B,"1":0x02,"2":0x03,"3":0x04,"4":0x05,"5":0x06,"6":0x07,"7":0x08,"8":0x09,"9":0x0A,
+      " ":0x39, "-":0x0C
+    };
+    var ENTER = 0x1C, BACKSPACE = 0x0E, LSHIFT = 0x2A;
+
+    // Send one character to v86 as a press+release (with Shift for uppercase).
+    function sendChar(emulator, ch) {
+      if (ch === "\n" || ch === "\r") { emulator.keyboard_send_scancodes([ENTER, ENTER | 0x80]); return; }
+      var lower = ch.toLowerCase();
+      var code = SCAN[lower];
+      if (code === undefined) return;              // ignore keys we don't map
+      var upper = (ch !== lower);                  // was it a capital letter?
+      var seq = [];
+      if (upper) seq.push(LSHIFT);
+      seq.push(code, code | 0x80);
+      if (upper) seq.push(LSHIFT | 0x80);
+      emulator.keyboard_send_scancodes(seq);
+    }
+
     document.getElementById("boot").addEventListener("click", function () {
       var btn = this, status = document.getElementById("status");
+      var typeBtn = document.getElementById("typebtn");
+      var proxy = document.getElementById("kbd-proxy");
       btn.disabled = true; btn.style.opacity = 0.6;
       status.textContent = "Loading emulator…";
       document.getElementById("screen_container").style.display = "block";
@@ -97,6 +146,23 @@
       emulator.add_listener("emulator-ready", function () { status.textContent = "Booting…"; });
       emulator.add_listener("emulator-started", function () {
         setTimeout(function () { status.textContent = ""; }, 3000);
+        typeBtn.style.display = "inline-block";   // reveal the mobile keyboard button
+      });
+
+      // Tapping the button focuses the hidden input, which opens the on-screen keyboard on phones.
+      typeBtn.addEventListener("click", function () { proxy.focus(); });
+
+      // Forward physical key presses typed into the proxy (covers Enter + Backspace reliably).
+      proxy.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") { sendChar(emulator, "\n"); e.preventDefault(); }
+        else if (e.key === "Backspace") { emulator.keyboard_send_scancodes([BACKSPACE, BACKSPACE | 0x80]); e.preventDefault(); }
+      });
+
+      // Forward typed characters. On mobile, "input" events are more reliable than keydown for letters.
+      proxy.addEventListener("input", function (e) {
+        var val = proxy.value;
+        for (var i = 0; i < val.length; i++) { sendChar(emulator, val[i]); }
+        proxy.value = "";        // clear so the next character is fresh
       });
     });
   </script>
