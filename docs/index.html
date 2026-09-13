@@ -142,24 +142,14 @@
     .name-box {
       display: flex;
       align-items: center;
-      gap: 22px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 22px 24px;
+      gap: 28px;
       margin-top: 20px;
     }
-    .name-box .art {
-      font-size: 3.6rem;
-      line-height: 1;
-      flex-shrink: 0;
-    }
-    /* If you add a real photo (docs/leveret.jpg), it will use this instead. */
     .name-box img.leveret {
-      width: 120px;
-      height: 120px;
+      width: 200px;
+      height: 200px;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 12px;
       flex-shrink: 0;
       border: 1px solid var(--border);
     }
@@ -172,6 +162,7 @@
     }
     @media (max-width: 520px) {
       .name-box { flex-direction: column; text-align: center; }
+      .name-box img.leveret { width: 100%; height: auto; max-width: 260px; }
       .photo-credit { text-align: center; }
     }
 
@@ -220,12 +211,12 @@
     <section>
       <h2>Why "LeveretOS"?</h2>
       <div class="name-box">
-        <img class="leveret" src="leveret.jpg" alt="A leveret, a young hare, resting in grass" />
         <p>
           A <strong>leveret</strong> is a baby hare , small, quick, and one of the
           fastest-growing young animals around. It felt like the right mascot for an OS
-          that starts as almost nothing and grows a little more capable with every lesson.
+          that started as almost nothing and grows a little better with every lesson.
         </p>
+        <img class="leveret" src="leveret.jpg" alt="A leveret, a young hare, resting in grass" />
       </div>
       <p class="photo-credit">
         Photo by
