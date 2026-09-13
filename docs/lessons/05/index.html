@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+  <title>LeveretOS , Lesson 05: String Helpers</title>
+  <meta name="description" content="Lesson 05 of LeveretOS: strlen, strcmp, memcpy, memset and atoi. Boot it live in your browser." />
+  <style>
+    :root {
+      --bg: #0d1117; --panel: #161b22; --border: #30363d;
+      --text: #e6edf3; --muted: #8b949e; --accent: #4ade80;
+      --accent-dim: #2ea043; --link: #58a6ff;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.65; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .back { color: var(--muted); font-size: 0.9rem; }
+    h1 { font-size: 2rem; margin: 18px 0 4px; }
+    h1 .num { font-family: "SFMono-Regular", Consolas, monospace; color: var(--accent); }
+    .sub { color: var(--muted); margin-top: 0; }
+    h2 { font-size: 1.3rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-top: 44px; }
+    p { color: #c9d1d9; }
+    code { font-family: "SFMono-Regular", Consolas, monospace; background: var(--panel); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; font-size: 0.88em; color: var(--accent); }
+    .nav { margin-top: 40px; display: flex; justify-content: space-between; font-size: 0.9rem; }
+    .emu-wrap { margin-top: 20px; }
+    .interactive { background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 12px 16px; color: #c9d1d9; margin-top: 16px; font-size: 0.92rem; }
+    #screen_container { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 8px; overflow: hidden; display: none; }
+    #screen_container div { white-space: pre; font: 14px monospace; line-height: 14px; color: #fff; }
+    #screen_container canvas { display: block; }
+    .boot-btn { display: inline-block; padding: 12px 24px; border-radius: 8px; border: 1px solid var(--accent-dim);
+      background: var(--accent-dim); color: #fff; font-weight: 600; font-size: 0.95rem; cursor: pointer; }
+    .boot-btn:hover { border-color: var(--accent); }
+    .boot-note { color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
+    .status { color: var(--accent); font-size: 0.9rem; margin-top: 12px; min-height: 1.2em; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="../../">&larr; LeveretOS home</a>
+
+    <h1><span class="num">05</span> &middot; String Helpers</h1>
+    <p class="sub">Create helpers for strings and memory.</p>
+
+    <h2>What this lesson adds</h2>
+    <p>
+      With no standard library, the OS writes its own: <code>strlen</code>, <code>strcmp</code>,
+      <code>memcpy</code>, <code>memset</code>, and <code>atoi</code> (which turns typed text back
+      into a number). The demo reads two numbers from the keyboard and adds them together.
+    </p>
+
+    <h2>Boot it in your browser</h2>
+    <p>Run the real LeveretOS lesson-5 ISO, emulated with <a href="https://github.com/copy/v86">v86</a>.</p>
+
+    <div class="emu-wrap">
+      <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 05)</button>
+      <div class="status" id="status"></div>
+      <div class="interactive">This lesson is interactive , once it boots, <strong>click inside the screen</strong> and type a number, press Enter, then a second number and Enter.</div>
+      <div id="screen_container">
+        <div></div>
+        <canvas style="display:none"></canvas>
+      </div>
+      <p class="boot-note">Emulated in your browser, nothing is installed. The emulator + ISO take a few moments to load.</p>
+    </div>
+
+    <div class="nav">
+      <a href="../04/">&larr; Print Numbers</a>
+      <a href="../06/">Next: Scrolling &rarr;</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/v86@0.5.460/build/libv86.js"></script>
+  <script>
+    document.getElementById("boot").addEventListener("click", function () {
+      var btn = this, status = document.getElementById("status");
+      btn.disabled = true; btn.style.opacity = 0.6;
+      status.textContent = "Loading emulator…";
+      document.getElementById("screen_container").style.display = "block";
+      var emulator = new V86({
+        wasm_path: "https://cdn.jsdelivr.net/npm/v86@0.5.460/build/v86.wasm",
+        memory_size: 32 * 1024 * 1024,
+        vga_memory_size: 2 * 1024 * 1024,
+        screen_container: document.getElementById("screen_container"),
+        bios:     { url: "https://cdn.jsdelivr.net/gh/copy/v86@latest/bios/seabios.bin" },
+        vga_bios: { url: "https://cdn.jsdelivr.net/gh/copy/v86@latest/bios/vgabios.bin" },
+        cdrom:    { url: "LeveretOS-StringHelpers.iso" },
+        autostart: true,
+      });
+      emulator.add_listener("emulator-ready", function () { status.textContent = "Booting…"; });
+      emulator.add_listener("emulator-started", function () {
+        setTimeout(function () { status.textContent = ""; }, 3000);
+      });
+    });
+  </script>
+</body>
+</html>
