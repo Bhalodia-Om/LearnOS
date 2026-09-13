@@ -69,9 +69,9 @@ cp build/kernel.bin build/isodir/boot/kernel.bin    # "cp" <- copy the "kernel.b
 cp grub.cfg build/isodir/boot/grub/grub.cfg         # "cp" <- copy the "grub.cfg" from build to our "grub" folder in the ISO.
 
 # grub-mkrescue packs the isodir folder into a bootable .iso
-grub-mkrescue -o build/LearnOS-TextOutput.iso build/isodir
+grub-mkrescue -o build/LeveretOS-TextOutput.iso build/isodir
 
 echo "[5/5] Launching QEMU..."
 
 # Boot the ISO in our emulated 32-bit PC(represented by i386, representing a 32-bit x86 computer).
-qemu-system-i386 -cdrom build/LearnOS-TextOutput.iso      # "-cdrom". Attach our ISO as a read only(ROM) disk.
+qemu-system-i386 -cdrom build/LeveretOS-TextOutput.iso      # "-cdrom". Attach our ISO as a read only(ROM) disk.

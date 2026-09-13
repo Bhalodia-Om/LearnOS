@@ -157,7 +157,7 @@ extern "C" void kernel_main() {
 
     clear_screen();
 
-    print("LearnOS - Lesson 3: keyboard input.\n\n");
+    print("LeveretOS - Lesson 3: keyboard input.\n\n");
 
     print("What is your name? ");
     

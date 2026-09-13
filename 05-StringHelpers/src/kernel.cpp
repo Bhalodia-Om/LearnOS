@@ -247,11 +247,11 @@ extern "C" void kernel_main() {
     text_color = make_color(VGA_WHITE, VGA_BLACK);
     clear_screen();
 
-    print("LearnOS - Lesson 5: string and memory helpers.\n\n");
+    print("LeveretOS - Lesson 5: string and memory helpers.\n\n");
 
     // strlen
-    print("Length of \"LearnOS\": "); // the '\' shows that the following " is not the end of the print command, but something to be printed.
-    print_int((int)strlen("LearnOS"));
+    print("Length of \"LeveretOS\": "); // the '\' shows that the following " is not the end of the print command, but something to be printed.
+    print_int((int)strlen("LeveretOS"));
     putchar('\n');
 
     // strcmp, compare strings "abc" and "abd"

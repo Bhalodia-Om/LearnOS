@@ -187,7 +187,7 @@ extern "C" void kernel_main() {
 
     clear_screen();
 
-    print("LearnOS - Lesson 4: printing numbers.\n\n");
+    print("LeveretOS - Lesson 4: printing numbers.\n\n");
 
     print("A positive number: ");
     print_int(12345);

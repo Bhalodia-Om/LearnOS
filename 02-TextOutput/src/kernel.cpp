@@ -77,7 +77,7 @@ extern "C" void kernel_main() {
 
     // Challenge: Write your favorite quote out using our new print command.
 
-    print("LearnOS - Lesson 2: text output using a cursor.\n");
+    print("LeveretOS - Lesson 2: text output using a cursor.\n");
 
     print("My Favorite Quote: ");
     print("Beware of bugs in the above code; I have only proved it correct, not tried it.\n");

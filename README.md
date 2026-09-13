@@ -1,6 +1,6 @@
-# LearnOS
+# LeveretOS
 
-**LearnOS** is a small operating system built completely from scratch, one lesson at a time. Every file is commented for beginners, so the repository doubles as a step-by-step guide to how an OS actually works, starting from the very first instruction that runs at boot.
+**LeveretOS** is a small operating system built completely from scratch, one lesson at a time. Every file is commented for beginners, so the repository doubles as a step-by-step guide to how an OS actually works, starting from the very first instruction that runs at boot.
 
 ## The idea
 
