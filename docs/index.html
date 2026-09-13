@@ -127,6 +127,23 @@
       font-size: 0.88em;
       color: var(--accent);
     }
+    pre {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+    pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: #c9d1d9;
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+    pre code .cmt { color: var(--muted); }
 
     /* ---- Lessons table ---- */
     table {
@@ -278,6 +295,30 @@
       <p>
         A good guide for setting up the necessary software to be able to boot:
         <a href="https://wiki.osdev.org/Bare_Bones">OSDev Bare Bones</a>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Building with Docker (macOS, Windows, or Linux)</h2>
+      <p>
+        If you don't want to install the toolchain by hand, the repo includes a
+        <code>Dockerfile</code> with the exact build environment. You only need
+        <a href="https://www.docker.com/">Docker</a> to build and
+        <a href="https://www.qemu.org/">QEMU</a> to run.
+      </p>
+<pre><code><span class="cmt"># From the repo root, build the toolchain container once:</span>
+docker build -t leveretos .
+
+<span class="cmt"># Build a lesson's ISO inside the container (change the folder for other lessons):</span>
+docker run --platform linux/amd64 --rm -v "$PWD":/src -w /src/06-Scrolling leveretos ../build-iso.sh
+
+<span class="cmt"># Run the resulting ISO with QEMU on your own machine:</span>
+qemu-system-i386 -cdrom 06-Scrolling/build/LeveretOS-Scrolling.iso</code></pre>
+      <p>
+        The container is pinned to x86-64, so on Apple Silicon Macs Docker emulates it (a little
+        slower, but it works). The ISO is written to the lesson's <code>build/</code> folder on
+        your machine, then you run it with QEMU on the host. On macOS, install QEMU with
+        <code>brew install qemu</code>.
       </p>
     </section>
 
