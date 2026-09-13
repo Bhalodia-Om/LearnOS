@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
   <title>LeveretOS , building an operating system from scratch, one lesson at a time</title>
   <meta name="description" content="LeveretOS is a small educational operating system built completely from scratch in C++. Each lesson adds one feature , bootloader, VGA text, keyboard input and more , all commented for beginners." />
@@ -58,6 +59,12 @@
     header {
       text-align: center;
       padding: 80px 0 10px;
+    }
+    .logo-mark {
+      width: 84px;
+      height: 84px;
+      margin-bottom: 14px;
+      filter: drop-shadow(0 0 16px rgba(74, 222, 128, 0.3));
     }
     .logo {
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
@@ -245,6 +252,7 @@
 <body>
   <div class="wrap">
     <header>
+      <img class="logo-mark" src="favicon.svg" alt="LeveretOS hare logo" />
       <h1 class="logo">Leveret<span class="os">OS</span><span class="cursor">_</span></h1>
       <p class="tagline">
         A small educational operating system built completely from scratch, with each new
