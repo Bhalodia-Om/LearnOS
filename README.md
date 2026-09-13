@@ -30,8 +30,9 @@ If you don't want to install the toolchain by hand, the included `Dockerfile` pr
 # From the repo root, build the toolchain container once:
 docker build -t leveretos .
 
-# Build a lesson's ISO inside the container (example: lesson 06):
-docker run --rm -v "$PWD":/src -w /src/06-Scrolling leveretos ./build-iso.sh
+# Build a lesson's ISO inside the container (example: lesson 06).
+# Change the folder after -w to build a different lesson:
+docker run --rm -v "$PWD":/src -w /src/06-Scrolling leveretos ../build-iso.sh
 
 # Run the resulting ISO with QEMU on your own machine:
 qemu-system-i386 -cdrom 06-Scrolling/build/LeveretOS-Scrolling.iso
