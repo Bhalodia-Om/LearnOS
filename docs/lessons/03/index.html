@@ -87,7 +87,8 @@
     <div class="emu-wrap">
       <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 03)</button>
       <div class="status" id="status"></div>
-      <div class="interactive">This lesson is interactive. On a computer, <strong>click inside the screen</strong> and type. On a phone, tap <strong>Tap to type</strong> below to bring up your keyboard.</div>
+      <div class="interactive" id="note-desktop">This lesson is interactive , <strong>click inside the screen</strong> and start typing.</div>
+      <div class="interactive" id="note-touch" style="display:none">This lesson is interactive , tap <strong>Tap to type</strong> below to bring up your keyboard.</div>
       <div id="screen_container">
         <div></div>
         <canvas style="display:none"></canvas>
@@ -105,6 +106,11 @@
 
   <script src="https://cdn.jsdelivr.net/npm/v86@0.5.460/build/libv86.js"></script>
   <script>
+    // Detect touch devices; show the matching instruction note right away.
+    var IS_TOUCH = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
+    document.getElementById("note-desktop").style.display = IS_TOUCH ? "none" : "block";
+    document.getElementById("note-touch").style.display   = IS_TOUCH ? "block" : "none";
+
     // --- Set 1 scancodes for the keys our lessons use ---
     var SCAN = {
       a:0x1E,b:0x30,c:0x2E,d:0x20,e:0x12,f:0x21,g:0x22,h:0x23,i:0x17,j:0x24,
@@ -147,12 +153,9 @@
         autostart: true,
       });
       emulator.add_listener("emulator-ready", function () { status.textContent = "Booting…"; });
-      // Only touch devices need the on-screen keyboard button; desktops type directly.
-      var isTouch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
-
       emulator.add_listener("emulator-started", function () {
         setTimeout(function () { status.textContent = ""; }, 3000);
-        if (isTouch) {
+        if (IS_TOUCH) {
           typeBtn.style.display = "block";   // reveal the keyboard button on touch devices only
         }
       });
