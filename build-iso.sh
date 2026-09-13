@@ -9,17 +9,25 @@ set -e
 lesson="$(basename "$PWD" | sed 's/^[0-9]*-//')"
 iso="build/LeveretOS-${lesson}.iso"
 
+CXXFLAGS="-m32 -ffreestanding -fno-exceptions -fno-rtti -fno-stack-protector -fno-pie -nostdlib -Wall -Wextra"
+
 echo "[1/4] Assembling boot.s..."
 mkdir -p build
 nasm -f elf32 src/boot.s -o build/boot.o
 
-echo "[2/4] Compiling kernel.cpp..."
-g++ -m32 -ffreestanding -fno-exceptions -fno-rtti -fno-stack-protector \
-    -fno-pie -nostdlib -Wall -Wextra -c src/kernel.cpp -o build/kernel.o
+echo "[2/4] Compiling every src/*.cpp..."
+# Compiles all .cpp files, so it works whether a lesson has one kernel.cpp or many.
+OBJS="build/boot.o"
+for cpp in src/*.cpp; do
+    obj="build/$(basename "${cpp%.cpp}").o"
+    echo "    $cpp -> $obj"
+    g++ $CXXFLAGS -c "$cpp" -o "$obj"
+    OBJS="$OBJS $obj"
+done
 
 echo "[3/4] Linking kernel.bin..."
 g++ -m32 -T linker.ld -ffreestanding -nostdlib -no-pie \
-    -o build/kernel.bin build/boot.o build/kernel.o
+    -o build/kernel.bin $OBJS
 
 echo "[4/4] Building the ISO..."
 mkdir -p build/isodir/boot/grub

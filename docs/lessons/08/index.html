@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
-  <title>LeveretOS , Lesson 07: Rock Paper Scissors</title>
-  <meta name="description" content="Lesson 07 of LeveretOS: a playable Rock Paper Scissors game in the terminal. Boot it live in your browser." />
+  <title>LeveretOS , Lesson 08: Restructure</title>
+  <meta name="description" content="Lesson 08 of LeveretOS: splitting the kernel into multiple files and headers. Same behaviour as lesson 7, cleaner code." />
   <style>
     :root {
       --bg: #0d1117; --panel: #161b22; --border: #30363d;
       --text: #e6edf3; --muted: #8b949e; --accent: #4ade80;
-      --accent-dim: #2ea043; --link: #58a6ff;
+      --accent-dim: #2ea043; --link: #58a6ff; --warn: #d29922;
     }
     * { box-sizing: border-box; }
     body { margin: 0; background: var(--bg); color: var(--text);
@@ -30,6 +30,7 @@
     .nav a { color: var(--accent); font-weight: 600; }
     .emu-wrap { margin-top: 20px; }
     .interactive { background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 12px 16px; color: #c9d1d9; margin-top: 16px; font-size: 0.92rem; }
+    .warn-box { background: rgba(210,153,34,0.08); border: 1px solid var(--warn); border-left: 3px solid var(--warn); border-radius: 8px; padding: 12px 16px; color: #e3c07b; margin-top: 20px; font-size: 0.92rem; }
     #screen_container { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 8px; overflow: auto; display: none; scrollbar-width: thin; scrollbar-color: #30363d #000; }
     #screen_container::-webkit-scrollbar { width: 8px; height: 8px; }
     #screen_container::-webkit-scrollbar-thumb { background: #30363d; border-radius: 8px; }
@@ -55,22 +56,29 @@
   <div class="wrap">
     <a class="back" href="../../">&larr; LeveretOS home</a>
 
-    <h1><span class="num">07</span> &middot; Rock Paper Scissors</h1>
-    <p class="sub">A playable game in the terminal, built from everything so far.</p>
+    <h1><span class="num">08</span> &middot; Restructure</h1>
+    <p class="sub">Splitting the kernel into multiple files, one per concern.</p>
 
     <h2>What this lesson adds</h2>
     <p>
-      No new OS systems , this is the reward. It combines everything built so far into a playable
-      Rock Paper Scissors game: keyboard input for your move, a spinning counter as a stand-in for
-      randomness (we have no real random number generator yet), and <code>print</code> /
-      <code>print_int</code> for the moves and running score.
+      No new features , this lesson reorganizes the growing single <code>kernel.cpp</code> into
+      separate files (<code>vga</code>, <code>keyboard</code>, <code>string</code>, <code>io</code>,
+      and <code>kernel</code>), each with a header that declares what the others can use. It
+      introduces header files, include guards, and <code>extern</code> for shared globals , the
+      structure every later lesson (the GDT, interrupts, memory, networking) builds on.
     </p>
 
+    <div class="warn-box">
+      <strong>Heads up:</strong> this boots the <em>same</em> Rock Paper Scissors game as
+      <a href="../07/">lesson 7</a>. The change here is entirely in how the code is organized,
+      not what it does, so the screen looks identical. It's here for completeness.
+    </div>
+
     <h2>Boot it in your browser</h2>
-    <p>Run the real LeveretOS lesson-7 ISO, emulated with <a href="https://github.com/copy/v86">v86</a>.</p>
+    <p>Run the real LeveretOS lesson-8 ISO, emulated with <a href="https://github.com/copy/v86">v86</a>.</p>
 
     <div class="emu-wrap">
-      <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 07)</button>
+      <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 08)</button>
       <div class="status" id="status"></div>
       <div class="interactive" id="note-desktop">This lesson is interactive , <strong>click inside the screen</strong> and press r, p, or s to play.</div>
       <div class="interactive" id="note-touch" style="display:none">This lesson is interactive , tap <strong>Tap to type</strong> below, then press r, p, or s to play.</div>
@@ -84,19 +92,17 @@
     </div>
 
     <div class="nav">
-      <a href="../06/">&larr; Scrolling</a>
-      <a href="../08/">Next: Restructure &rarr;</a>
+      <a href="../07/">&larr; Rock Paper Scissors</a>
+      <span></span>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/v86@0.5.460/build/libv86.js"></script>
   <script>
-    // Detect touch devices; show the matching instruction note right away.
     var IS_TOUCH = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
     document.getElementById("note-desktop").style.display = IS_TOUCH ? "none" : "block";
     document.getElementById("note-touch").style.display   = IS_TOUCH ? "block" : "none";
 
-    // --- Set 1 scancodes for the keys our lessons use ---
     var SCAN = {
       a:0x1E,b:0x30,c:0x2E,d:0x20,e:0x12,f:0x21,g:0x22,h:0x23,i:0x17,j:0x24,
       k:0x25,l:0x26,m:0x32,n:0x31,o:0x18,p:0x19,q:0x10,r:0x13,s:0x1F,t:0x14,
@@ -133,7 +139,7 @@
         screen_container: document.getElementById("screen_container"),
         bios:     { url: "https://cdn.jsdelivr.net/gh/copy/v86@latest/bios/seabios.bin" },
         vga_bios: { url: "https://cdn.jsdelivr.net/gh/copy/v86@latest/bios/vgabios.bin" },
-        cdrom:    { url: "LeveretOS-RockPaperScissors.iso" },
+        cdrom:    { url: "LeveretOS-Restructure.iso" },
         autostart: true,
       });
       emulator.add_listener("emulator-ready", function () { status.textContent = "Booting…"; });

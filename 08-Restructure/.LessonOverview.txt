@@ -1,0 +1,16 @@
+This lesson has no new OS features. It splits the single kernel.cpp into multiple files, one per concern, so LeveretOS stays manageable as it grows.
+
+The OS behaves exactly the same as lesson 7 (the Rock Paper Scissors game), this lesson only reorganizes the code.
+
+New concepts:
+- Header files (.h) that DECLARE functions, and .cpp files that DEFINE them.
+- Include guards (#ifndef / #define / #endif) so a header isn't pasted in twice.
+- "extern" for globals that are shared across files (defined once in a .cpp, declared in the .h).
+- A build that compiles every .cpp in src/ and links them together.
+
+File layout:
+- io.h            port I/O (inb), header-only inline
+- vga.h/.cpp      screen output: colors, cursor, clear_screen, scroll, putchar, print, print_int
+- string.h/.cpp   strlen, strcmp, memcpy, memset, atoi
+- keyboard.h/.cpp getchar, read_line, scancode table
+- kernel.cpp      kernel_main + the Rock Paper Scissors game
