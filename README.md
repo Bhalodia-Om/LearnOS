@@ -20,6 +20,7 @@ Each lesson has its own numbered folder and adds one new feature on top of the l
 | 07 | Rock Paper Scissors | A playable terminal game built from everything so far |
 | **Talking to the Hardware** | | |
 | 08 | Restructure | Split the kernel into multiple files and headers (no behaviour change) |
+| 09 | GDT | Build our own segment table so the kernel controls its own code and data (no behaviour change) |
 
 ## Building and running a lesson
 

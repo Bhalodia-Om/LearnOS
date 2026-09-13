@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
-  <title>LeveretOS , Lesson 08: Restructure</title>
-  <meta name="description" content="Lesson 08 of LeveretOS: splitting the kernel into multiple files and headers. Same behaviour as lesson 7, cleaner code." />
+  <title>LeveretOS , Lesson 09: GDT</title>
+  <meta name="description" content="Lesson 09 of LeveretOS: building our own Global Descriptor Table (GDT) so the kernel controls its own code and data segments. Groundwork for interrupts." />
   <style>
     :root {
       --bg: #0d1117; --panel: #161b22; --border: #30363d;
@@ -56,29 +56,34 @@
   <div class="wrap">
     <a class="back" href="../../">&larr; LeveretOS home</a>
 
-    <h1><span class="num">08</span> &middot; Restructure</h1>
-    <p class="sub">Splitting the kernel into multiple files, one per concern.</p>
+    <h1><span class="num">09</span> &middot; GDT</h1>
+    <p class="sub">Building our own Global Descriptor Table so the kernel controls its own segments.</p>
 
     <h2>What this lesson adds</h2>
     <p>
-      No new features , this lesson reorganizes the growing single <code>kernel.cpp</code> into
-      separate files (<code>vga</code>, <code>keyboard</code>, <code>string</code>, <code>io</code>,
-      and <code>kernel</code>), each with a header that declares what the others can use. It
-      introduces header files, include guards, and <code>extern</code> for shared globals , the
-      structure every later lesson (the GDT, interrupts, memory, networking) builds on.
+      Up to now the kernel has been running on the segment table GRUB set up for us. This lesson
+      replaces it with our own <strong>Global Descriptor Table</strong> (GDT) , a small table that
+      tells the CPU how memory is split into <em>segments</em> and what each one is allowed to do
+      (code vs data, which privilege level). We build a flat 3-entry table (a required null entry,
+      a code segment, and a data segment, each covering the full 4&nbsp;GB), then load it with the
+      <code>lgdt</code> instruction and reload every segment register in a little
+      <code>gdt_flush.s</code> assembly routine. Nothing on screen changes , the point is that
+      later lessons (interrupts, and eventually the keyboard driver) need a code segment
+      <em>we</em> own to point at.
     </p>
 
     <div class="warn-box">
       <strong>Heads up:</strong> this boots the <em>same</em> Rock Paper Scissors game as
-      <a href="../07/">lesson 7</a>. The change here is entirely in how the code is organized,
-      not what it does, so the screen looks identical. It's here for completeness.
+      <a href="../08/">lesson 8</a>. The change here is entirely under the hood , the kernel now
+      runs on its own GDT instead of GRUB's , so the screen looks identical. It's here because
+      it's the foundation the next lessons build on.
     </div>
 
     <h2>Boot it in your browser</h2>
-    <p>Run the real LeveretOS lesson-8 ISO, emulated with <a href="https://github.com/copy/v86">v86</a>.</p>
+    <p>Run the real LeveretOS lesson-9 ISO, emulated with <a href="https://github.com/copy/v86">v86</a>.</p>
 
     <div class="emu-wrap">
-      <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 08)</button>
+      <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 09)</button>
       <div class="status" id="status"></div>
       <div class="interactive" id="note-desktop">This lesson is interactive , <strong>click inside the screen</strong> and press r, p, or s to play.</div>
       <div class="interactive" id="note-touch" style="display:none">This lesson is interactive , tap <strong>Tap to type</strong> below, then press r, p, or s to play.</div>
@@ -92,8 +97,8 @@
     </div>
 
     <div class="nav">
-      <a href="../07/">&larr; Rock Paper Scissors</a>
-      <a href="../09/">GDT &rarr;</a>
+      <a href="../08/">&larr; Restructure</a>
+      <span></span>
     </div>
   </div>
 
@@ -139,7 +144,7 @@
         screen_container: document.getElementById("screen_container"),
         bios:     { url: "https://cdn.jsdelivr.net/gh/copy/v86@latest/bios/seabios.bin" },
         vga_bios: { url: "https://cdn.jsdelivr.net/gh/copy/v86@latest/bios/vgabios.bin" },
-        cdrom:    { url: "LeveretOS-Restructure.iso" },
+        cdrom:    { url: "LeveretOS-GDT.iso" },
         autostart: true,
       });
       emulator.add_listener("emulator-ready", function () { status.textContent = "Booting…"; });

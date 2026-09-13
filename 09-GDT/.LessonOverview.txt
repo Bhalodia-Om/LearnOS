@@ -1,0 +1,16 @@
+This lesson sets up our own GDT (Global Descriptor Table). It has no visible effect , the OS still boots and runs the Rock Paper Scissors game exactly as before. But it is required groundwork for the next lesson (interrupts), which needs a code segment we control.
+
+Background: GRUB already set up a temporary GDT for us, which is why every lesson so far worked. Here we replace it with our own flat 3-entry GDT (null, code, data) covering all 4GB of memory, and load it with the CPU's lgdt instruction.
+
+New concepts:
+- What memory segmentation and descriptors are.
+- A packed GDT entry struct + the GDTR pointer.
+- Loading the GDT (lgdt) and reloading the segment registers , this needs assembly, because you cannot reload the CS (code segment) register from C++.
+
+Files changed / added:
+- gdt.h / gdt.cpp   (new)
+- gdt_flush.s       (new: assembly to load the GDT and reload segments)
+- kernel.cpp        (call gdt_init() first thing)
+
+WARNING: a wrong value here causes a triple fault (instant reboot loop, no error).
+Success = the OS still boots and RPS still works, now on our GDT.

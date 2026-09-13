@@ -11,13 +11,19 @@ iso="build/LeveretOS-${lesson}.iso"
 
 CXXFLAGS="-m32 -ffreestanding -fno-exceptions -fno-rtti -fno-stack-protector -fno-pie -nostdlib -Wall -Wextra"
 
-echo "[1/4] Assembling boot.s..."
+echo "[1/4] Assembling every src/*.s..."
+# Assembles all .s files, so it works whether a lesson has one boot.s or many (e.g. gdt_flush.s).
 mkdir -p build
-nasm -f elf32 src/boot.s -o build/boot.o
+OBJS=""
+for asm in src/*.s; do
+    obj="build/$(basename "${asm%.s}").o"
+    echo "    $asm -> $obj"
+    nasm -f elf32 "$asm" -o "$obj"
+    OBJS="$OBJS $obj"
+done
 
 echo "[2/4] Compiling every src/*.cpp..."
 # Compiles all .cpp files, so it works whether a lesson has one kernel.cpp or many.
-OBJS="build/boot.o"
 for cpp in src/*.cpp; do
     obj="build/$(basename "${cpp%.cpp}").o"
     echo "    $cpp -> $obj"
