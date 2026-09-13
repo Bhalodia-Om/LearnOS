@@ -1,0 +1,9 @@
+This lesson is a reward: a playable Rock Paper Scissors game in the terminal. We will be adding no new OS systems, just combining everything built so far: 
+read_line for input, strcmp to understand the player's choice, a simple counter for the computer's "random" move (% 3), and print/print_int for output.
+
+Since we have no real random number source yet, the computer's move comes from a counter that changes each round, good enough randomness for a game.
+
+Files changed:
+- kernel.cpp
+
+Changed files will only contain comments for changes that are new to this lesson.
