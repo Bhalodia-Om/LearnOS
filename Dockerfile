@@ -1,9 +1,9 @@
 # Build environment for LeveretOS.
-# This installs the exact Linux toolchain the lessons' build.sh scripts expect,
-# so anyone (macOS, Windows, Linux) can build the OS identically without setting
+# This will install the exact Linux toolchain the lessons' build.sh scripts expect,
+# so any operating system (macOS, Windows, Linux) can build the OS identically without setting
 # the tools up by hand.
 #
-# Usage (from the repo root):
+# Usage (from the repo root): Run this code in terminal from the repository root.
 #   docker build -t leveretos .
 #   docker run --rm -v "$PWD":/src -w /src/06-Scrolling leveretos ./build-iso.sh
 #
