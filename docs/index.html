@@ -189,15 +189,24 @@
       font-size: 0.78rem;
       letter-spacing: 0.05em;
     }
+    tbody tr { cursor: pointer; transition: background 0.12s ease; }
     tbody tr:hover { background: var(--panel); }
+    tbody tr:hover td.name { color: var(--accent); }
     td.num {
       font-family: "SFMono-Regular", Consolas, monospace;
       color: var(--accent);
       font-weight: 700;
       width: 40px;
     }
-    td.name { font-weight: 600; white-space: nowrap; }
+    td.name { font-weight: 600; white-space: nowrap; color: var(--text); }
     td.desc { color: var(--muted); }
+    td.boot {
+      text-align: right;
+      white-space: nowrap;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
 
     /* ---- "Why LeveretOS" name section ---- */
     .name-box {
@@ -297,15 +306,15 @@
       <h2>Lessons so far</h2>
       <table>
         <thead>
-          <tr><th>#</th><th>Lesson</th><th>What it adds</th></tr>
+          <tr><th>#</th><th>Lesson</th><th>What it adds</th><th></th></tr>
         </thead>
         <tbody>
-          <tr><td class="num">01</td><td class="name"><a href="lessons/01/">Hello World</a></td><td class="desc">Booting via GRUB and writing text to VGA memory , <a href="lessons/01/">boot it live &rarr;</a></td></tr>
-          <tr><td class="num">02</td><td class="name"><a href="lessons/02/">Text Output</a></td><td class="desc">A moving cursor for typing, putchar/print, newlines and wrapping , <a href="lessons/02/">boot it live &rarr;</a></td></tr>
-          <tr><td class="num">03</td><td class="name"><a href="lessons/03/">Text Input</a></td><td class="desc">Reading the keyboard: scancodes, getchar, read_line , <a href="lessons/03/">boot it live &rarr;</a></td></tr>
-          <tr><td class="num">04</td><td class="name"><a href="lessons/04/">Print Numbers</a></td><td class="desc">Turning integers into on-screen digits , <a href="lessons/04/">boot it live &rarr;</a></td></tr>
-          <tr><td class="num">05</td><td class="name"><a href="lessons/05/">String helpers</a></td><td class="desc">Create helpers for strings and memory , <a href="lessons/05/">boot it live &rarr;</a></td></tr>
-          <tr><td class="num">06</td><td class="name"><a href="lessons/06/">Scrolling</a></td><td class="desc">Shift lines up when text reaches the bottom, like a real terminal , <a href="lessons/06/">boot it live &rarr;</a></td></tr>
+          <tr onclick="location.href='lessons/01/'"><td class="num">01</td><td class="name">Hello World</td><td class="desc">Booting via GRUB and writing text to VGA memory</td><td class="boot">Boot &rarr;</td></tr>
+          <tr onclick="location.href='lessons/02/'"><td class="num">02</td><td class="name">Text Output</td><td class="desc">A moving cursor for typing, putchar/print, newlines and wrapping</td><td class="boot">Boot &rarr;</td></tr>
+          <tr onclick="location.href='lessons/03/'"><td class="num">03</td><td class="name">Text Input</td><td class="desc">Reading the keyboard: scancodes, getchar, read_line</td><td class="boot">Boot &rarr;</td></tr>
+          <tr onclick="location.href='lessons/04/'"><td class="num">04</td><td class="name">Print Numbers</td><td class="desc">Turning integers into on-screen digits</td><td class="boot">Boot &rarr;</td></tr>
+          <tr onclick="location.href='lessons/05/'"><td class="num">05</td><td class="name">String helpers</td><td class="desc">Create helpers for strings and memory</td><td class="boot">Boot &rarr;</td></tr>
+          <tr onclick="location.href='lessons/06/'"><td class="num">06</td><td class="name">Scrolling</td><td class="desc">Shift lines up when text reaches the bottom, like a real terminal</td><td class="boot">Boot &rarr;</td></tr>
         </tbody>
       </table>
     </section>

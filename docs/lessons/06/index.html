@@ -45,9 +45,14 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 8px;
-      overflow: hidden;
+      overflow: auto;             /* scroll to pan around the OS on small screens */
       display: none;              /* shown after boot is clicked */
+      scrollbar-width: thin;
+      scrollbar-color: #30363d #000;
     }
+    #screen_container::-webkit-scrollbar { width: 8px; height: 8px; }
+    #screen_container::-webkit-scrollbar-thumb { background: #30363d; border-radius: 8px; }
+    #screen_container::-webkit-scrollbar-track { background: #000; }
     #screen_container div {
       white-space: pre;
       font: 14px monospace;

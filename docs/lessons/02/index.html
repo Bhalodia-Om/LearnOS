@@ -26,7 +26,10 @@
     p { color: #c9d1d9; }
     .nav { margin-top: 40px; display: flex; justify-content: space-between; font-size: 0.9rem; }
     .emu-wrap { margin-top: 20px; }
-    #screen_container { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 8px; overflow: hidden; display: none; }
+    #screen_container { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 8px; overflow: auto; display: none; scrollbar-width: thin; scrollbar-color: #30363d #000; }
+    #screen_container::-webkit-scrollbar { width: 8px; height: 8px; }
+    #screen_container::-webkit-scrollbar-thumb { background: #30363d; border-radius: 8px; }
+    #screen_container::-webkit-scrollbar-track { background: #000; }
     #screen_container div { white-space: pre; font: 14px monospace; line-height: 14px; color: #fff; }
     #screen_container canvas { display: block; }
     .boot-btn { display: inline-block; padding: 12px 24px; border-radius: 8px; border: 1px solid var(--accent-dim);
