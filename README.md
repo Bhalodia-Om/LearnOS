@@ -8,10 +8,9 @@ Each lesson has its own numbered folder and adds one new feature on top of the l
 
 ## Lessons so far
 
-### Fundamentals
-
 | # | Lesson | What it adds |
 |---|--------|--------------|
+| **Fundamentals** | | |
 | 01 | Hello World | Booting via GRUB and writing text to VGA memory |
 | 02 | Text Output | A moving cursor for typing, `putchar`/`print`, newlines and wrapping |
 | 03 | Text Input | Reading the keyboard: scancodes, `getchar`, `read_line` |
@@ -19,11 +18,7 @@ Each lesson has its own numbered folder and adds one new feature on top of the l
 | 05 | String helpers | Create helpers for strings and memory |
 | 06 | Scrolling | Shift lines up when text reaches the bottom, like a real terminal |
 | 07 | Rock Paper Scissors | A playable terminal game built from everything so far |
-
-### CPU Plumbing
-
-| # | Lesson | What it adds |
-|---|--------|--------------|
+| **CPU Plumbing** | | |
 | 08 | Restructure | Split the kernel into multiple files and headers (no behaviour change) |
 
 ## Building and running a lesson
