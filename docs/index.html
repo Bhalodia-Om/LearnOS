@@ -134,6 +134,24 @@
       padding: 16px 18px;
       overflow-x: auto;
       margin-top: 16px;
+      /* dark, blended scrollbar (Firefox) */
+      scrollbar-width: thin;
+      scrollbar-color: #30363d var(--panel);
+    }
+    /* dark, blended scrollbar (Chrome / Safari / Edge) */
+    pre::-webkit-scrollbar {
+      height: 8px;
+    }
+    pre::-webkit-scrollbar-track {
+      background: var(--panel);
+      border-radius: 0 0 8px 8px;
+    }
+    pre::-webkit-scrollbar-thumb {
+      background: #30363d;
+      border-radius: 8px;
+    }
+    pre::-webkit-scrollbar-thumb:hover {
+      background: #3f4650;
     }
     pre code {
       background: none;
