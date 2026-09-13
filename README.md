@@ -2,6 +2,10 @@
 
 **LeveretOS** is a small educational operating system built completely from scratch, with each new addition split into a separate lesson. Every change is commented for beginners, so this repository doubles as a step-by-step guide to how an OS actually works, starting from the very first instruction that runs at boot.
 
+## Why "LeveretOS"?
+
+A leveret is a baby hare, small, quick, and one of the fastest-growing young animals around. It felt like the right mascot for an OS that started as almost nothing and grows a little better with every lesson.
+
 ## The idea
 
 Each lesson has its own numbered folder and adds one new feature on top of the last. Code that is reused from earlier lessons will be left without educative comments, while keeping other comments. New or changed code will contain comments to guide you through each part.
