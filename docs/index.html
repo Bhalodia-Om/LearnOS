@@ -167,8 +167,14 @@
       text-align: right;
     }
     @media (max-width: 520px) {
-      .name-box { flex-direction: column; text-align: center; }
-      .name-box img.leveret { width: 180px; height: 180px; margin-top: 0; }
+      .name-box { flex-direction: column; text-align: center; align-items: center; }
+      .name-box img.leveret {
+        width: 240px;
+        height: 240px;
+        margin-top: 24px;
+        align-self: center;
+      }
+      .name-box p { padding-top: 0; }
       .photo-credit { text-align: center; }
     }
 
