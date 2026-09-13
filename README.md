@@ -15,6 +15,7 @@ Each lesson has its own numbered folder and adds one new feature on top of the l
 | 03 | Text Input | Reading the keyboard: scancodes, `getchar`, `read_line` |
 | 04 | Print Numbers | Turning integers into on-screen digits |
 | 05 | String helpers | Create helpers for strings and memory |
+| 06 | Scrolling | Shift lines up when text reaches the bottom, like a real terminal |
 
 ## Building and running a lesson
 
