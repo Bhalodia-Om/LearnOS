@@ -42,17 +42,20 @@
     .boot-note { color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
     .status { color: var(--accent); font-size: 0.9rem; margin-top: 12px; min-height: 1.2em; }
     .type-btn {
+      display: block;
+      width: 100%;
       margin-top: 12px;
-      padding: 10px 18px;
+      padding: 13px 18px;
       border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: var(--text);
+      border: 1px solid var(--accent-dim);
+      background: transparent;
+      color: var(--accent);
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       cursor: pointer;
+      transition: background 0.12s ease, border-color 0.12s ease;
     }
-    .type-btn:hover { border-color: var(--accent); }
+    .type-btn:hover { background: var(--panel); border-color: var(--accent); }
     /* Off-screen but focusable, so tapping it opens the iOS keyboard.
        Must NOT be display:none / visibility:hidden or iOS won't show the keyboard. */
     #kbd-proxy {
@@ -84,12 +87,12 @@
     <div class="emu-wrap">
       <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 03)</button>
       <div class="status" id="status"></div>
-      <div class="interactive">This lesson is interactive. On a computer, <strong>click inside the screen</strong> and type. On a phone, tap <strong>&#9000; Tap to type</strong> below to bring up your keyboard.</div>
+      <div class="interactive">This lesson is interactive. On a computer, <strong>click inside the screen</strong> and type. On a phone, tap <strong>Tap to type</strong> below to bring up your keyboard.</div>
       <div id="screen_container">
         <div></div>
         <canvas style="display:none"></canvas>
       </div>
-      <button class="type-btn" id="typebtn" style="display:none">&#9000; Tap to type</button>
+      <button class="type-btn" id="typebtn" style="display:none">Tap to type</button>
       <input id="kbd-proxy" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-hidden="true" />
       <p class="boot-note">Emulated in your browser, nothing is installed. The emulator + ISO take a few moments to load.</p>
     </div>
@@ -150,7 +153,14 @@
       });
 
       // Tapping the button focuses the hidden input, which opens the on-screen keyboard on phones.
-      typeBtn.addEventListener("click", function () { proxy.focus(); });
+      // Focusing pulls the viewport toward the (off-screen) input, so scroll the screen back
+      // into view once the keyboard has started animating up.
+      typeBtn.addEventListener("click", function () {
+        proxy.focus();
+        setTimeout(function () {
+          document.getElementById("screen_container").scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 350);
+      });
 
       // Forward physical key presses typed into the proxy (covers Enter + Backspace reliably).
       proxy.addEventListener("keydown", function (e) {
