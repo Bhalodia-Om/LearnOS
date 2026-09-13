@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LeveretOS , an operating system built from scratch</title>
-  <meta name="description" content="LeveretOS is a small operating system built completely from scratch, one commented lesson at a time." />
+  <meta name="description" content="LeveretOS is a small educational operating system built completely from scratch, with each new addition split into a separate lesson." />
   <style>
     :root {
       --bg: #0d1117;
@@ -12,13 +12,12 @@
       --border: #30363d;
       --text: #e6edf3;
       --muted: #8b949e;
-      --accent: #4ade80;      /* soft green, VGA-terminal nod */
+      --accent: #4ade80;
       --accent-dim: #2ea043;
       --link: #58a6ff;
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -41,7 +40,6 @@
       text-align: center;
       padding: 90px 0 50px;
     }
-
     .logo {
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
       font-size: 3.2rem;
@@ -50,15 +48,12 @@
       margin: 0;
     }
     .logo .os { color: var(--accent); }
-
     .tagline {
       color: var(--muted);
       font-size: 1.15rem;
       margin: 14px auto 0;
-      max-width: 520px;
+      max-width: 560px;
     }
-
-    /* blinking cursor after the title, terminal feel */
     .cursor {
       display: inline-block;
       width: 0.6ch;
@@ -88,11 +83,7 @@
       transition: transform 0.08s ease, border-color 0.15s ease;
     }
     .btn:hover { transform: translateY(-1px); }
-    .btn-primary {
-      background: var(--accent-dim);
-      color: #fff;
-      border-color: var(--accent-dim);
-    }
+    .btn-primary { background: var(--accent-dim); color: #fff; border-color: var(--accent-dim); }
     .btn-primary:hover { border-color: var(--accent); }
     .btn-secondary { color: var(--text); }
     .btn-secondary:hover { border-color: var(--muted); }
@@ -101,49 +92,51 @@
     section { margin-top: 56px; }
     h2 {
       font-size: 1.4rem;
-      margin-bottom: 4px;
+      margin-bottom: 10px;
       border-bottom: 1px solid var(--border);
       padding-bottom: 10px;
     }
     p { color: #c9d1d9; }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline; }
-
-    /* ---- Lessons list ---- */
-    .lessons {
-      list-style: none;
-      padding: 0;
-      margin: 20px 0 0;
-    }
-    .lessons li {
-      display: flex;
-      align-items: baseline;
-      gap: 14px;
-      padding: 12px 16px;
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
       background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 10px;
+      border-radius: 5px;
+      padding: 1px 6px;
+      font-size: 0.88em;
+      color: var(--accent);
     }
-    .lessons .num {
+
+    /* ---- Lessons table ---- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+      font-size: 0.95rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+    }
+    tbody tr:hover { background: var(--panel); }
+    td.num {
       font-family: "SFMono-Regular", Consolas, monospace;
       color: var(--accent);
       font-weight: 700;
-      min-width: 28px;
+      width: 40px;
     }
-    .lessons .name { font-weight: 600; }
-    .lessons .desc { color: var(--muted); font-size: 0.92rem; }
-
-    /* ---- Callout ---- */
-    .callout {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      border-radius: 8px;
-      padding: 16px 20px;
-      margin-top: 20px;
-      color: #c9d1d9;
-    }
+    td.name { font-weight: 600; white-space: nowrap; }
+    td.desc { color: var(--muted); }
 
     footer {
       margin-top: 70px;
@@ -159,7 +152,10 @@
   <div class="wrap">
     <header>
       <h1 class="logo">Leveret<span class="os">OS</span><span class="cursor">_</span></h1>
-      <p class="tagline">An operating system built completely from scratch , one commented lesson at a time.</p>
+      <p class="tagline">
+        A small educational operating system built completely from scratch, with each new
+        addition split into a separate lesson.
+      </p>
       <div class="actions">
         <a class="btn btn-primary" href="https://github.com/Bhalodia-Om/LeveretOS">View on GitHub</a>
         <a class="btn btn-secondary" href="#lessons">See the lessons</a>
@@ -167,37 +163,58 @@
     </header>
 
     <section>
-      <h2>What is this?</h2>
       <p>
-        LeveretOS is a real operating system, written from nothing. No Windows, no Linux
-        underneath , just code running directly on the hardware. Every file is commented for
-        beginners, so the project doubles as a step-by-step guide to how an OS actually works,
-        starting from the very first instruction that runs at boot.
+        Every change is commented for beginners, so this repository doubles as a step-by-step
+        guide to how an OS actually works, starting from the very first instruction that runs
+        at boot.
       </p>
-      <div class="callout">
-        Each lesson lives in its own folder and adds one new feature on top of the last. Reused
-        code keeps its comments but gets no new ones , only new or changed code is freshly
-        commented, so what's new each lesson stands out.
-      </div>
+    </section>
+
+    <section>
+      <h2>The idea</h2>
+      <p>
+        Each lesson has its own numbered folder and adds one new feature on top of the last.
+        Code that is reused from earlier lessons will be left without educative comments, while
+        keeping other comments. New or changed code will contain comments to guide you through
+        each part.
+      </p>
     </section>
 
     <section id="lessons">
       <h2>Lessons so far</h2>
-      <ul class="lessons">
-        <li><span class="num">01</span><span><span class="name">Hello World</span><br><span class="desc">Booting via GRUB and writing text straight to VGA memory</span></span></li>
-        <li><span class="num">02</span><span><span class="name">Text Output</span><br><span class="desc">A moving cursor, putchar / print, newlines and wrapping</span></span></li>
-        <li><span class="num">03</span><span><span class="name">Text Input</span><br><span class="desc">Reading the keyboard: scancodes, getchar, read_line</span></span></li>
-        <li><span class="num">04</span><span><span class="name">Print Numbers</span><br><span class="desc">Turning integers into on-screen digits</span></span></li>
-        <li><span class="num">05</span><span><span class="name">String Helpers</span><br><span class="desc">strlen, strcmp, memcpy, memset, and atoi</span></span></li>
-      </ul>
+      <table>
+        <thead>
+          <tr><th>#</th><th>Lesson</th><th>What it adds</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">01</td><td class="name">Hello World</td><td class="desc">Booting via GRUB and writing text to VGA memory</td></tr>
+          <tr><td class="num">02</td><td class="name">Text Output</td><td class="desc">A moving cursor for typing, putchar/print, newlines and wrapping</td></tr>
+          <tr><td class="num">03</td><td class="name">Text Input</td><td class="desc">Reading the keyboard: scancodes, getchar, read_line</td></tr>
+          <tr><td class="num">04</td><td class="name">Print Numbers</td><td class="desc">Turning integers into on-screen digits</td></tr>
+          <tr><td class="num">05</td><td class="name">String helpers</td><td class="desc">Create helpers for strings and memory</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Building and running a lesson</h2>
+      <p>
+        Each lesson folder is self-contained and includes a <code>build.sh</code> that assembles
+        the bootloader, compiles the kernel, makes a bootable ISO, and launches it in QEMU. You
+        will need <code>nasm</code>, a 32-bit-capable <code>g++</code>, <code>grub-mkrescue</code>,
+        <code>xorriso</code>, and <code>qemu-system-i386</code> (on Windows, a Linux environment
+        such as WSL works well).
+      </p>
+      <p>
+        A good guide for setting up the necessary software to be able to boot:
+        <a href="https://wiki.osdev.org/Bare_Bones">OSDev Bare Bones</a>.
+      </p>
     </section>
 
     <section>
       <h2>The goal</h2>
       <p>
-        The long-term goal is to grow LeveretOS far enough to connect to the internet and pull
-        down a simple web page over HTTP , building interrupts, memory management, and a network
-        stack along the way. One lesson at a time.
+        The current goal is to create an educational OS that can connect to the web.
       </p>
     </section>
 
