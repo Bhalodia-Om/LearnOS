@@ -1,7 +1,6 @@
 #ifndef IO_H
 #define IO_H
-// Include guard: the two lines above (and #endif at the bottom) stop this header
-// from being pasted in twice if multiple files #include it. Every header uses this.
+// Include guard: the two lines above (and #endif at the bottom) stop this header from being pasted in twice if multiple files #include it. Every header uses this.
 
 #include <stdint.h>
 
