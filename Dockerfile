@@ -11,7 +11,9 @@
 # the -v mount). You then run it with QEMU on your host:
 #   qemu-system-i386 -cdrom 06-Scrolling/build/LeveretOS-Scrolling.iso
 
-FROM ubuntu:24.04
+# Pin to x86-64: the 32-bit (-m32) and BIOS-GRUB packages below only exist on the
+# amd64 Ubuntu repos. On Apple Silicon Macs, Docker emulates this via QEMU.
+FROM --platform=linux/amd64 ubuntu:24.04
 
 # gcc-multilib provides 32-bit (-m32) support; grub-pc-bin gives grub-mkrescue the
 # BIOS boot modules it needs; xorriso is required by grub-mkrescue to build the ISO.

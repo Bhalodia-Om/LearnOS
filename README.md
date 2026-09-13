@@ -32,13 +32,13 @@ docker build -t leveretos .
 
 # Build a lesson's ISO inside the container (example: lesson 06).
 # Change the folder after -w to build a different lesson:
-docker run --rm -v "$PWD":/src -w /src/06-Scrolling leveretos ../build-iso.sh
+docker run --platform linux/amd64 --rm -v "$PWD":/src -w /src/06-Scrolling leveretos ../build-iso.sh
 
 # Run the resulting ISO with QEMU on your own machine:
 qemu-system-i386 -cdrom 06-Scrolling/build/LeveretOS-Scrolling.iso
 ```
 
-The ISO is built inside the container but written to the lesson's `build/` folder on your machine, so you run it with QEMU on the host. On macOS, install QEMU with `brew install qemu` (on Apple Silicon the 32-bit PC is emulated in software, which is fine for a small OS).
+The container is pinned to x86-64 (the toolchain needs the amd64 Ubuntu packages), so on Apple Silicon Macs Docker emulates it via QEMU , the build is a little slower but works. The ISO is built inside the container but written to the lesson's `build/` folder on your machine, so you run it with QEMU on the host. On macOS, install QEMU with `brew install qemu` (the 32-bit PC is emulated in software, which is fine for a small OS).
 
 ## The goal
 
