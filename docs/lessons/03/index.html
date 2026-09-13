@@ -147,9 +147,14 @@
         autostart: true,
       });
       emulator.add_listener("emulator-ready", function () { status.textContent = "Booting…"; });
+      // Only touch devices need the on-screen keyboard button; desktops type directly.
+      var isTouch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
+
       emulator.add_listener("emulator-started", function () {
         setTimeout(function () { status.textContent = ""; }, 3000);
-        typeBtn.style.display = "inline-block";   // reveal the mobile keyboard button
+        if (isTouch) {
+          typeBtn.style.display = "block";   // reveal the keyboard button on touch devices only
+        }
       });
 
       // Tapping the button focuses the hidden input, which opens the on-screen keyboard on phones.
