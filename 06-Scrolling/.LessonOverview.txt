@@ -4,4 +4,7 @@ Now, when the cursor goes past the last row, we shift every line up by one and k
 Files changed:
 - kernel.cpp
 
-Changed files will only contain comments for changes that are new to this lesson.
+Changed files will only contain comments for changes that are new to this lesson. 
+
+Remember that there are likely multiple new code snippets, and each one is label under a new code header. 
+Read through the entire file to make sure any changed code isnt skipped.

@@ -1,6 +1,12 @@
 #include <stdint.h>
 #include <stddef.h>
 
+// --- New Code ---
+// This is a forward declaration, which promises the compiler that memcpy exists, and leave the full definition where it is. 
+// We use forward declarations when we want the code to recognize that we have this function, but want to actually put the function after, where calls to it can't see it.
+static void* memcpy(void* dest, const void* src, size_t count);
+// --- End Of New Code. New Code continued in scroll() ---
+
 // --- VGA text mode ---
 static const size_t VGA_WIDTH  = 80;
 static const size_t VGA_HEIGHT = 25;
@@ -36,6 +42,24 @@ static void clear_screen() {
     cursor_col = 0;
 }
 
+// --- New Code: Scrolling ---
+// scrolling will move every row up by one and make the bottom row blank. We will call this function when text would go past the last line.
+// This way the screen doesn't write off the end of the VGA memory.
+// We copy rows 1 up into the row above, and repeat for each line. 
+// As memcpy counts bytes, multiply the cell count by sizeof(uint16_t), or the size of a 16 bit integer, which we use for a single character of text.
+// Our following lines are safe, as this code only overwrites lines above it, and we start from the top.
+static void scroll() {
+    memcpy(VGA_MEMORY,  // destination is the start of row 0, or the topmost row.
+           VGA_MEMORY + VGA_WIDTH, // source is the start of row 0 + the width of the display, or the start of row 1.
+           (VGA_HEIGHT - 1) * VGA_WIDTH * sizeof(uint16_t)); // The count of bytes to copy is all the cells on the screen minus the 1st row,
+                                                             // multiplied by the size in bytes of each cell.
+    // Make the last row blank to overwrite the old text that was there.
+    for (size_t col = 0; col < VGA_WIDTH; col++) {
+        VGA_MEMORY[(VGA_HEIGHT - 1) * VGA_WIDTH + col] = make_entry(' ', text_color);
+    }
+}
+
+
 static void putchar(char c) {
     if (c == '\b') {
         if (cursor_col > 0) {
@@ -52,6 +76,10 @@ static void putchar(char c) {
     if (c == '\n') {
         cursor_col = 0;
         cursor_row++;
+        if (cursor_row >= VGA_HEIGHT) {     // The new cursor_row ran off the bottom of the screen.
+            scroll();                       // Use the shift function to shift everything up.
+            cursor_row = VGA_HEIGHT - 1;    // Realign the cursor with the last row.
+        }
         return;
     }
 
@@ -62,9 +90,13 @@ static void putchar(char c) {
     if (cursor_col >= VGA_WIDTH) {
         cursor_col = 0;
         cursor_row++;
+        if (cursor_row >= VGA_HEIGHT) {     // The new line wrap ran off the bottom of the screen.
+            scroll();                       // Use the shift function to shift everything up.
+            cursor_row = VGA_HEIGHT - 1;    // Realign the cursor with the last row.
+        }
     }
 }
-
+// --- End of new code. New code continued in kernel_main() ---
 static void print(const char* str) {
     for (size_t i = 0; str[i] != '\0'; i++) {
         putchar(str[i]);
@@ -230,40 +262,15 @@ extern "C" void kernel_main() {
     text_color = make_color(VGA_WHITE, VGA_BLACK);
     clear_screen();
 
-    print("LeveretOS - Lesson 5: string and memory helpers.\n\n");
+    print("LeveretOS - Lesson 6: scrolling.\n\n");   // [NEW] lesson 6 banner
 
-    print("Length of \"LeveretOS\": ");
-    print_int((int)strlen("LeveretOS"));
-    putchar('\n');
+    // Print more lines than the screen has rows (25). Without scrolling this would write past the bottom of VGA memory.
+    // Now the screen scrolls and shows the most recent lines.
+    for (int i = 1; i <= 40; i++) {
+        print("Line ");
+        print_int(i);
+        putchar('\n');
+    }
 
-    print("strcmp(\"abc\", \"abc\") = ");
-    print_int(strcmp("abc", "abc"));
-    print("   strcmp(\"abc\", \"abd\") = ");
-    print_int(strcmp("abc", "abd"));
-    putchar('\n');
-
-    char buffer[16];
-    memcpy(buffer, "copied!", 8);
-    print("memcpy gives: ");
-    print(buffer);
-    putchar('\n');
-
-    memset(buffer, 'X', 5);
-    buffer[5] = '\0';
-    print("memset gives: ");
-    print(buffer);
-    print("\n\n");
-
-    char a[16];
-    char b[16];
-
-    print("Enter a number: ");
-    read_line(a, 16);
-
-    print("Enter another:  ");
-    read_line(b, 16);
-
-    print("Sum: ");
-    print_int(atoi(a) + atoi(b));
-    putchar('\n');
+    print("Done, the earliest lines scrolled off the display!\n");
 }
