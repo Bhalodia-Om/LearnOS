@@ -138,6 +138,36 @@
     td.name { font-weight: 600; white-space: nowrap; }
     td.desc { color: var(--muted); }
 
+    /* ---- "Why LeveretOS" name section ---- */
+    .name-box {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 24px;
+      margin-top: 20px;
+    }
+    .name-box .art {
+      font-size: 3.6rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    /* If you add a real photo (docs/leveret.jpg), it will use this instead. */
+    .name-box img.leveret {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+    .name-box p { margin: 0; }
+    @media (max-width: 520px) {
+      .name-box { flex-direction: column; text-align: center; }
+    }
+
     footer {
       margin-top: 70px;
       padding-top: 24px;
@@ -178,6 +208,21 @@
         keeping other comments. New or changed code will contain comments to guide you through
         each part.
       </p>
+    </section>
+
+    <section>
+      <h2>Why "LeveretOS"?</h2>
+      <div class="name-box">
+        <!-- To use a real photo instead of the emoji: save a properly-licensed image
+             as docs/leveret.jpg and replace the <span class="art"> line below with:
+             <img class="leveret" src="leveret.jpg" alt="A leveret, a young hare" /> -->
+        <span class="art">&#128007;</span>
+        <p>
+          A <strong>leveret</strong> is a baby hare , small, quick, and one of the
+          fastest-growing young animals around. It felt like the right mascot for an OS
+          that starts as almost nothing and grows a little more capable with every lesson.
+        </p>
+      </div>
     </section>
 
     <section id="lessons">
