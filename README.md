@@ -68,7 +68,3 @@ qemu-system-i386 -cdrom 06-Scrolling/build/LeveretOS-Scrolling.iso
 ```
 
 The container is pinned to x86-64 (the toolchain needs the amd64 Ubuntu packages), so on Apple Silicon Macs Docker emulates it via QEMU, the build is a little slower but works. The ISO is built inside the container but written to the lesson's `build/` folder on your machine, so you run it with QEMU on the host. On macOS, install QEMU with `brew install qemu` (the 32-bit PC is emulated in software, which is fine for a small OS).
-
-## The goal
-
-The current goal is to create an educational OS that can connect to the web.
