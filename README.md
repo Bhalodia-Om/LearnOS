@@ -18,6 +18,7 @@ The first big goal is a LeveretOS that can go online and open a web page. These 
 - [ ] Type commands into it, like a real terminal
 - [ ] Show a running clock
 - [ ] Greet you with a login screen at startup
+- [ ] Show real graphics on screen, colors, shapes, and our own hare logo
 - [ ] Open a page from the web
 
 Once it can browse the web, the goals get bigger. This is where LeveretOS grows from a single program into something closer to a real operating system.
