@@ -12,21 +12,21 @@ Each lesson has its own numbered folder and adds one new feature on top of the l
 
 ## Goals
 
-The first big goal is a LeveretOS that can go online and open a web page. These are the checkpoints on the way there, ticked off as we reach them.
+The first big goal is a LeveretOS that can go online and open a web page. These are the checkpoints we have set to reach our goal.
 
 - [x] Play a game on it (Rock Paper Scissors)
 - [ ] Type commands into it, like a real terminal
 - [ ] Show a running clock
 - [ ] Greet you with a login screen at startup
-- [ ] Show real graphics on screen, colors, shapes, and our own hare logo
+- [ ] Graphics processing, so our browser gets a display.
 - [ ] Open a page from the web
 
-Once it can browse the web, the goals get bigger. This is where LeveretOS grows from a single program into something closer to a real operating system.
+Once we can browse the web, the goals will get bigger. This is where LeveretOS will grow from a single program into something closer to a real operating system.
 
-- [ ] Log in securely, with a real password check
+- [ ] Log in securely, with a real password
 - [ ] Create, open, and manage files
-- [ ] Write and save notes in a built-in text editor
-- [ ] Run its own separate apps, instead of everything being one program
+- [ ] Write and save notes in a text editor
+- [ ] Run separate apps, instead of everything being one program
 - [ ] Open the web browser as one of those apps
 
 ## Lessons so far
