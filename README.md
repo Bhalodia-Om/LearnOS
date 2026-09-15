@@ -10,7 +10,7 @@ A leveret is a baby hare, small, quick, and one of the fastest-growing young ani
 
 Each lesson has its own numbered folder and adds one new feature on top of the last. Code that is reused from earlier lessons will be left without educative comments, while keeping other comments. New or changed code will contain comments to guide you through each part.
 
-## Milestones
+## Goals
 
 The first big goal is a LeveretOS that can go online and open a web page. These are the checkpoints on the way there, ticked off as we reach them.
 
