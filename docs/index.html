@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
-  <title>LeveretOS, building an operating system from scratch, one lesson at a time</title>
-  <meta name="description" content="LeveretOS is a small educational operating system built completely from scratch in C++. Each lesson adds one feature, bootloader, VGA text, keyboard input and more, all commented for beginners." />
+  <title>LeveretOS, an educational Operating System built lesson by lesson.</title>
+  <meta name="description" content="LeveretOS is a small educational operating system built completely from scratch in C++. Each lesson will add one new feature that operating systems have, including comments fit for beginners." />
   <meta name="keywords" content="operating system from scratch, OS development, osdev, kernel, x86, bare metal, C++, bootloader, GRUB, learn OS, LeveretOS" />
   <meta name="author" content="Om Bhalodia" />
   <link rel="canonical" href="https://leveretos.me/" />
@@ -327,10 +327,10 @@
       <img class="logo-mark" src="favicon.svg" alt="LeveretOS hare logo" />
       <h1 class="logo">Leveret<span class="os">OS</span><span class="cursor">_</span></h1>
       <p class="tagline">
-        A small educational operating system built completely from scratch, with each new
-        addition split into a separate lesson. Every change is commented for beginners, so that this
-        repository can double as a step-by-step guide to how an OS actually works, starting from the
-        very first instruction at boot.
+        LeveretOS, a small educational Operating System built from scratch. New additions are
+        split into separate lessons, with each step documented. Every change includes educational
+        comments, built for beginners. This repository aims to double as a step-by-step guide on
+        how an OS actually works.
       </p>
       <div class="actions">
         <a class="btn btn-primary" href="https://github.com/Bhalodia-Om/LeveretOS">View on GitHub</a>
@@ -341,13 +341,13 @@
     <section>
       <h2>Try the latest build</h2>
       <p>
-        Boot the newest version of LeveretOS right here in browser, no install needed. It runs the same ISO as the most recent lesson.
+        Boot the latest version of LeveretOS in browser! No install required. This runs the same ISO as the latest lesson.
       </p>
       <div class="emu-wrap">
         <button class="boot-btn" id="boot">&#9654; Boot the latest LeveretOS</button>
         <div class="status" id="status"></div>
-        <div class="interactive" id="note-desktop">The current build is the Rock Paper Scissors game, <strong>click inside the screen</strong> and press r, p, or s.</div>
-        <div class="interactive" id="note-touch" style="display:none">The current build is the Rock Paper Scissors game, tap <strong>Tap to type</strong> below, then press r, p, or s.</div>
+        <div class="interactive" id="note-desktop">The current build is the Rock Paper Scissors game, <strong>click inside the screen</strong> and press r, p, or s to play.</div>
+        <div class="interactive" id="note-touch" style="display:none">The current build is the Rock Paper Scissors game, tap <strong>Tap to type</strong> below, then press r, p, or s to play.</div>
         <div id="screen_container">
           <div></div>
           <canvas style="display:none"></canvas>
@@ -361,10 +361,9 @@
     <section>
       <h2>The idea</h2>
       <p>
-        Each lesson has its own numbered folder and adds one new feature on top of the last.
-        Code that is reused from earlier lessons will be left without educative comments, while
-        keeping other comments. New or changed code will contain comments to guide you through
-        each part.
+        Each lesson will have its own folder, and will add one new feature on top of the last.
+        New or changed code will contain comments to guide you through each step. Note that reused
+        code will be left without educative comments to improve simplicity.
       </p>
     </section>
 
@@ -374,7 +373,7 @@
         <p>
           A <strong>leveret</strong> is a baby hare, small, quick, and one of the
           fastest-growing young animals around. It felt like the right mascot for an OS
-          that started as almost nothing and grows a little better with every lesson.
+          that started as almost nothing and will grow a little better with every lesson.
         </p>
         <img class="leveret" src="leveret.jpg" alt="A leveret, a young hare, resting in grass" />
       </div>
@@ -396,7 +395,7 @@
           <tr onclick="location.href='lessons/03/'"><td class="num">03</td><td class="name">Text Input</td><td class="desc">Reading the keyboard: scancodes, getchar, read_line</td><td class="boot">Boot &rarr;</td></tr>
           <tr onclick="location.href='lessons/04/'"><td class="num">04</td><td class="name">Print Numbers</td><td class="desc">Turning integers into on-screen digits</td><td class="boot">Boot &rarr;</td></tr>
           <tr onclick="location.href='lessons/05/'"><td class="num">05</td><td class="name">String helpers</td><td class="desc">Create helpers for strings and memory</td><td class="boot">Boot &rarr;</td></tr>
-          <tr onclick="location.href='lessons/06/'"><td class="num">06</td><td class="name">Scrolling</td><td class="desc">Shift lines up when text reaches the bottom, like a real terminal</td><td class="boot">Boot &rarr;</td></tr>
+          <tr onclick="location.href='lessons/06/'"><td class="num">06</td><td class="name">Scrolling</td><td class="desc">Shift lines up when text reaches the bottom</td><td class="boot">Boot &rarr;</td></tr>
           <tr onclick="location.href='lessons/07/'"><td class="num">07</td><td class="name">Rock Paper Scissors</td><td class="desc">A playable terminal game, built from everything so far</td><td class="boot">Boot &rarr;</td></tr>
         </tbody>
       </table>
@@ -413,9 +412,9 @@
     <section>
       <h2>Building and running a lesson</h2>
       <p>
-        Don't want to build anything? Every lesson can be
-        <a href="#lessons">booted right in your browser</a>, just hit "Boot" on any lesson above.
-        If you'd rather build it yourself, you can use the following.
+        Don't want to download anything? Every lesson can be
+        <a href="#lessons">booted in browser</a>, just press the "Boot" button on any lesson above.
+        If you'd rather build it yourself, you can use the following methods.
       </p>
       <p>
         Each lesson folder is self-contained and includes a <code>build.sh</code> that assembles
@@ -433,9 +432,9 @@
     <section>
       <h2>Building with Docker (macOS, Windows, or Linux)</h2>
       <p>
-        If you don't want to install the toolchain by hand, the repo includes a
-        <code>Dockerfile</code> with the exact build environment. You only need
-        <a href="https://www.docker.com/">Docker</a> to build and
+        If you don't want to install everything by hand, the repo includes a
+        <code>Dockerfile</code> with the build environment. You only need
+        <a href="https://www.docker.com/">Docker</a> to build, and
         <a href="https://www.qemu.org/">QEMU</a> to run.
       </p>
 <pre><code><span class="cmt"># From the repo root, build the toolchain container once:</span>
@@ -447,10 +446,9 @@ docker run --platform linux/amd64 --rm -v "$PWD":/src -w /src/06-Scrolling lever
 <span class="cmt"># Run the resulting ISO with QEMU on your own machine:</span>
 qemu-system-i386 -cdrom 06-Scrolling/build/LeveretOS-Scrolling.iso</code></pre>
       <p>
-        The container is pinned to x86-64, so on Apple Silicon Macs Docker emulates it (a little
-        slower, but it works). The ISO is written to the lesson's <code>build/</code> folder on
-        your machine, then you run it with QEMU on the host. On macOS, install QEMU with
-        <code>brew install qemu</code>.
+        The container is pinned to x86-64, so on Apple Silicon Macs Docker can emulate it (a little
+        slower, but it works). The ISO is written to the lesson's <code>build/</code> folder, so
+        you run it with QEMU on the host.
       </p>
     </section>
 
@@ -461,15 +459,15 @@ qemu-system-i386 -cdrom 06-Scrolling/build/LeveretOS-Scrolling.iso</code></pre>
         checkpoints we have set to reach our goal.
       </p>
       <ul class="milestones">
-        <li class="done"><span class="box">&#10003;</span><span>Play a game on it (Rock Paper Scissors)</span></li>
-        <li><span class="box">&#10003;</span><span>Type commands into it, like a real terminal</span></li>
-        <li><span class="box">&#10003;</span><span>Show a running clock</span></li>
-        <li><span class="box">&#10003;</span><span>Greet you with a login screen at startup</span></li>
-        <li><span class="box">&#10003;</span><span>Graphics processing, so our browser gets a display.</span></li>
+        <li class="done"><span class="box">&#10003;</span><span>Play a game (Rock Paper Scissors)</span></li>
+        <li><span class="box">&#10003;</span><span>Type commands into terminal</span></li>
+        <li><span class="box">&#10003;</span><span>Create a running clock</span></li>
+        <li><span class="box">&#10003;</span><span>Login screen at startup</span></li>
+        <li><span class="box">&#10003;</span><span>Graphics processing, so our browser gets a 2D display.</span></li>
         <li><span class="box">&#10003;</span><span>Open a page from the web</span></li>
       </ul>
       <p class="ms-note">
-        Once we can browse the web, the goals will get bigger. This is where LeveretOS will grow from a
+        Once we can browse the web, our goals can get bigger. This is where LeveretOS will grow from a
         single program into something closer to a real operating system.
       </p>
       <ul class="milestones">

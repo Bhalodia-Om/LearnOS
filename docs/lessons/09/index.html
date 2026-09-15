@@ -61,15 +61,11 @@
 
     <h2>What this lesson adds</h2>
     <p>
-      Up to now the kernel has been running on the segment table GRUB set up for us. This lesson
-      replaces it with our own <strong>Global Descriptor Table</strong> (GDT), a small table that
-      tells the CPU how memory is split into <em>segments</em> and what each one is allowed to do
-      (code vs data, which privilege level). We build a flat 3-entry table (a required null entry,
-      a code segment, and a data segment, each covering the full 4&nbsp;GB), then load it with the
-      <code>lgdt</code> instruction and reload every segment register in a little
-      <code>gdt_flush.s</code> assembly routine. Nothing on screen changes, the point is that
-      later lessons (interrupts, and eventually the keyboard driver) need a code segment
-      <em>we</em> own to point at.
+      Up to now the kernel has been running on the segment table GRUB set up. This lesson will
+      replace it with our own <strong>Global Descriptor Table</strong> (GDT), a small table that
+      tells the CPU how memory is split into <em>segments</em> and what each one is allowed to do,
+      like code vs data, and privilege levels. There are no changes to the screen, as this is to
+      setup for later lessons, which need a code segment that we control.
     </p>
 
     <div class="warn-box">
@@ -79,7 +75,7 @@
     </div>
 
     <h2>Boot it in your browser</h2>
-    <p>Run the real LeveretOS lesson-9 ISO, emulated with <a href="https://github.com/copy/v86">v86</a>.</p>
+    <p>Run the LeveretOS lesson-9 ISO, emulated with <a href="https://github.com/copy/v86">v86</a>.</p>
 
     <div class="emu-wrap">
       <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 09)</button>

@@ -50,13 +50,13 @@
 
     <h2>What this lesson adds</h2>
     <p>
-      The very first step: a kernel that boots on bare metal. GRUB loads it via a multiboot
-      header, then the code writes text straight into VGA memory at address 0xB8000, no
-      operating system underneath, just our code running directly on the machine.
+      The first step: For a kernel that boots without anything underneath, GRUB loads it via a
+      multiboot header, or tag that defines where our operating system is located. Then the code
+      writes text straight to memory.
     </p>
 
     <h2>Boot it in your browser</h2>
-    <p>Run the real LeveretOS lesson-1 ISO, emulated with <a href="https://github.com/copy/v86">v86</a>.</p>
+    <p>Run the LeveretOS lesson-1 ISO, emulated with <a href="https://github.com/copy/v86">v86</a>.</p>
 
     <div class="emu-wrap">
       <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 01)</button>

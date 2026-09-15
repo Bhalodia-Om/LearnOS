@@ -76,13 +76,13 @@
 
     <h2>What this lesson adds</h2>
     <p>
-      The OS can now read the keyboard. It polls the hardware port for scancodes (the numbers a
-      keyboard actually sends), turns them into characters with a lookup table, and builds
-      <code>getchar</code> and <code>read_line</code>. The demo asks for your name and greets you back.
+      The OS can now read the keyboard. It checks the hardware port for scancodes, the numbers that
+      keyboards send instead of characters, then turns them into characters. Our demonstration will
+      ask the user for their name, and repeat it back!
     </p>
 
     <h2>Boot it in your browser</h2>
-    <p>Run the real LeveretOS lesson-3 ISO, emulated with <a href="https://github.com/copy/v86">v86</a>.</p>
+    <p>Run the LeveretOS lesson-3 ISO, emulated with <a href="https://github.com/copy/v86">v86</a>.</p>
 
     <div class="emu-wrap">
       <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 03)</button>

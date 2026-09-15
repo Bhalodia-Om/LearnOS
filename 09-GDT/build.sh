@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 # Builds the OS into a bootable ISO and launches QEMU.
-# CHANGED for lesson 8: the kernel is now split across multiple .cpp files, so this
-# compiles EVERY src/*.cpp into its own .o, then links them all together.
+# Since lesson 8 the kernel lives in several .cpp files, so we compile each one to its own .o and link them together.
 set -e
 
 CXXFLAGS="-m32 -ffreestanding -fno-exceptions -fno-rtti -fno-stack-protector -fno-pie -nostdlib -Wall -Wextra"
 
 echo "[1/4] Assembling every src/*.s..."
-# CHANGED for lesson 9: we now have a second .s file (gdt_flush.s), so assemble them all.
+# We've got two .s files now (boot.s and gdt_flush.s), so loop over all of them instead of just boot.s.
 mkdir -p build
 OBJS=""
 for asm in src/*.s; do
