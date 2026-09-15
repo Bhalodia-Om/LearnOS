@@ -10,6 +10,24 @@ A leveret is a baby hare, small, quick, and one of the fastest-growing young ani
 
 Each lesson has its own numbered folder and adds one new feature on top of the last. Code that is reused from earlier lessons will be left without educative comments, while keeping other comments. New or changed code will contain comments to guide you through each part.
 
+## Milestones
+
+The first big goal is a LeveretOS that can go online and open a web page. These are the checkpoints on the way there, ticked off as we reach them.
+
+- [x] Play a game on it (Rock Paper Scissors)
+- [ ] Type commands into it, like a real terminal
+- [ ] Show a running clock
+- [ ] Greet you with a login screen at startup
+- [ ] Open a page from the web
+
+Once it can browse the web, the goals get bigger. This is where LeveretOS grows from a single program into something closer to a real operating system.
+
+- [ ] Log in securely, with a real password check
+- [ ] Create, open, and manage files
+- [ ] Write and save notes in a built-in text editor
+- [ ] Run its own separate apps, instead of everything being one program
+- [ ] Open the web browser as one of those apps
+
 ## Lessons so far
 
 | # | Lesson | What it adds |

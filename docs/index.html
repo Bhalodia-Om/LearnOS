@@ -230,6 +230,22 @@
       font-size: 0.88rem;
     }
 
+    /* ---- Milestones checklist ---- */
+    .milestones { list-style: none; padding: 0; margin: 16px 0 0; }
+    .milestones li {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 7px 0; color: #c9d1d9; font-size: 1rem;
+    }
+    .milestones .box {
+      flex: 0 0 auto; width: 18px; height: 18px; margin-top: 2px;
+      border: 1px solid var(--border); border-radius: 5px; background: var(--panel);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 12px; line-height: 1; color: transparent;
+    }
+    .milestones li.done .box { background: var(--accent-dim); border-color: var(--accent-dim); color: #fff; }
+    .milestones li.done span { color: var(--muted); }
+    .ms-note { color: var(--muted); font-size: 0.92rem; margin-top: 22px; }
+
     /* ---- "Why LeveretOS" name section ---- */
     .name-box {
       display: flex;
@@ -439,10 +455,29 @@ qemu-system-i386 -cdrom 06-Scrolling/build/LeveretOS-Scrolling.iso</code></pre>
     </section>
 
     <section>
-      <h2>The goal</h2>
+      <h2>Goals</h2>
       <p>
-        The current goal is to create an educational OS that can connect to the web.
+        The first big goal is a LeveretOS that can go online and open a web page. These are the
+        checkpoints on the way there, ticked off as we reach them.
       </p>
+      <ul class="milestones">
+        <li class="done"><span class="box">&#10003;</span><span>Play a game on it (Rock Paper Scissors)</span></li>
+        <li><span class="box">&#10003;</span><span>Type commands into it, like a real terminal</span></li>
+        <li><span class="box">&#10003;</span><span>Show a running clock</span></li>
+        <li><span class="box">&#10003;</span><span>Greet you with a login screen at startup</span></li>
+        <li><span class="box">&#10003;</span><span>Open a page from the web</span></li>
+      </ul>
+      <p class="ms-note">
+        Once it can browse the web, the goals get bigger. This is where LeveretOS grows from a
+        single program into something closer to a real operating system.
+      </p>
+      <ul class="milestones">
+        <li><span class="box">&#10003;</span><span>Log in securely, with a real password check</span></li>
+        <li><span class="box">&#10003;</span><span>Create, open, and manage files</span></li>
+        <li><span class="box">&#10003;</span><span>Write and save notes in a built-in text editor</span></li>
+        <li><span class="box">&#10003;</span><span>Run its own separate apps, instead of everything being one program</span></li>
+        <li><span class="box">&#10003;</span><span>Open the web browser as one of those apps</span></li>
+      </ul>
     </section>
 
     <footer>
