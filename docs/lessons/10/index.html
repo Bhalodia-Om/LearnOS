@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
-  <title>LeveretOS, Lesson 09: GDT</title>
-  <meta name="description" content="Lesson 09 of LeveretOS: building our own Global Descriptor Table (GDT) so the kernel controls its own code and data segments. Groundwork for interrupts." />
+  <title>LeveretOS, Lesson 10: Interrupts (IDT)</title>
+  <meta name="description" content="PLACEHOLDER_META_DESCRIPTION" />
   <style>
     :root {
       --bg: #0d1117; --panel: #161b22; --border: #30363d;
@@ -42,93 +42,50 @@
     .boot-btn:hover { border-color: var(--accent); }
     .boot-note { color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
     .status { color: var(--accent); font-size: 0.9rem; margin-top: 12px; min-height: 1.2em; }
-    .type-btn {
-      display: block; width: 100%; margin-top: 12px; padding: 13px 18px;
-      border-radius: 8px; border: 1px solid var(--accent-dim); background: transparent;
-      color: var(--accent); font-weight: 600; font-size: 0.95rem; cursor: pointer;
-      transition: background 0.12s ease, border-color 0.12s ease;
-    }
-    .type-btn:hover { background: var(--panel); border-color: var(--accent); }
-    #kbd-proxy { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <a class="back" href="../../">&larr; LeveretOS home</a>
 
-    <h1><span class="num">09</span> &middot; GDT</h1>
-    <p class="sub">Building our own Global Descriptor Table so the kernel controls its own segments.</p>
+    <h1><span class="num">10</span> &middot; Interrupts (IDT)</h1>
+    <p class="sub">PLACEHOLDER_SUBTITLE</p>
 
     <h2>What this lesson adds</h2>
     <p>
-      Up to now the kernel has been running on the segment table GRUB set up. This lesson will
-      replace it with our own <strong>Global Descriptor Table</strong> (GDT), a small table that
-      tells the CPU how memory is split into <em>segments</em> and what each one is allowed to do,
-      like code vs data, and privilege levels. There are no changes to the screen, as this is to
-      setup for later lessons, which need a code segment that we control.
+      PLACEHOLDER_WHAT_THIS_LESSON_ADDS
     </p>
 
     <div class="warn-box">
-      <strong>Heads up:</strong> this boots the <em>same</em> Rock Paper Scissors game as
-      <a href="../08/">lesson 8</a>. The change is in the backend, as the kernel now runs on its
-      own GDT, but the screen looks identical.
+      <strong>Heads up:</strong> PLACEHOLDER_WARNING_BOX
     </div>
 
     <h2>Boot it in your browser</h2>
-    <p>Run the LeveretOS lesson-9 ISO, emulated with <a href="https://github.com/copy/v86">v86</a>.</p>
+    <p>Run the LeveretOS lesson-10 ISO, emulated with <a href="https://github.com/copy/v86">v86</a>.</p>
 
     <div class="emu-wrap">
-      <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 09)</button>
+      <button class="boot-btn" id="boot">&#9654; Boot LeveretOS (Lesson 10)</button>
       <div class="status" id="status"></div>
-      <div class="interactive" id="note-desktop">This lesson is interactive, <strong>click inside the screen</strong> and press r, p, or s to play.</div>
-      <div class="interactive" id="note-touch" style="display:none">This lesson is interactive, tap <strong>Tap to type</strong> below, then press r, p, or s to play.</div>
+      <div class="interactive">PLACEHOLDER_BOOT_NOTE</div>
       <div id="screen_container">
         <div></div>
         <canvas style="display:none"></canvas>
       </div>
-      <button class="type-btn" id="typebtn" style="display:none">Tap to type</button>
-      <input id="kbd-proxy" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-hidden="true" />
       <p class="boot-note">Emulated in your browser, nothing is installed. The emulator + ISO take a few moments to load.</p>
     </div>
 
     <div class="nav">
-      <a href="../08/">&larr; Restructure</a>
-      <a href="../10/">Interrupts (IDT) &rarr;</a>
+      <a href="../09/">&larr; GDT</a>
+      <span></span>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/v86@0.5.460/build/libv86.js"></script>
   <script>
-    var IS_TOUCH = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
-    document.getElementById("note-desktop").style.display = IS_TOUCH ? "none" : "block";
-    document.getElementById("note-touch").style.display   = IS_TOUCH ? "block" : "none";
-
-    var SCAN = {
-      a:0x1E,b:0x30,c:0x2E,d:0x20,e:0x12,f:0x21,g:0x22,h:0x23,i:0x17,j:0x24,
-      k:0x25,l:0x26,m:0x32,n:0x31,o:0x18,p:0x19,q:0x10,r:0x13,s:0x1F,t:0x14,
-      u:0x16,v:0x2F,w:0x11,x:0x2D,y:0x15,z:0x2C,
-      "0":0x0B,"1":0x02,"2":0x03,"3":0x04,"4":0x05,"5":0x06,"6":0x07,"7":0x08,"8":0x09,"9":0x0A,
-      " ":0x39, "-":0x0C
-    };
-    var ENTER = 0x1C, BACKSPACE = 0x0E, LSHIFT = 0x2A;
-
-    function sendChar(emulator, ch) {
-      if (ch === "\n" || ch === "\r") { emulator.keyboard_send_scancodes([ENTER, ENTER | 0x80]); return; }
-      var lower = ch.toLowerCase();
-      var code = SCAN[lower];
-      if (code === undefined) return;
-      var upper = (ch !== lower);
-      var seq = [];
-      if (upper) seq.push(LSHIFT);
-      seq.push(code, code | 0x80);
-      if (upper) seq.push(LSHIFT | 0x80);
-      emulator.keyboard_send_scancodes(seq);
-    }
-
+    // Lesson 10 is not interactive: it deliberately triggers a CPU exception and halts,
+    // so there's no keyboard input to handle. We just boot the ISO and let it run.
     document.getElementById("boot").addEventListener("click", function () {
       var btn = this, status = document.getElementById("status");
-      var typeBtn = document.getElementById("typebtn");
-      var proxy = document.getElementById("kbd-proxy");
       btn.disabled = true; btn.style.opacity = 0.6;
       status.textContent = "Loading emulator…";
       document.getElementById("screen_container").style.display = "block";
@@ -139,30 +96,12 @@
         screen_container: document.getElementById("screen_container"),
         bios:     { url: "https://cdn.jsdelivr.net/gh/copy/v86@latest/bios/seabios.bin" },
         vga_bios: { url: "https://cdn.jsdelivr.net/gh/copy/v86@latest/bios/vgabios.bin" },
-        cdrom:    { url: "LeveretOS-GDT.iso" },
+        cdrom:    { url: "LeveretOS-Interrupts.iso" },
         autostart: true,
       });
       emulator.add_listener("emulator-ready", function () { status.textContent = "Booting…"; });
       emulator.add_listener("emulator-started", function () {
         setTimeout(function () { status.textContent = ""; }, 3000);
-        if (IS_TOUCH) { typeBtn.style.display = "block"; }
-      });
-
-      typeBtn.addEventListener("click", function () {
-        proxy.focus();
-        setTimeout(function () {
-          document.getElementById("screen_container").scrollIntoView({ behavior: "smooth", block: "center" });
-        }, 350);
-      });
-
-      proxy.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") { sendChar(emulator, "\n"); e.preventDefault(); }
-        else if (e.key === "Backspace") { emulator.keyboard_send_scancodes([BACKSPACE, BACKSPACE | 0x80]); e.preventDefault(); }
-      });
-      proxy.addEventListener("input", function () {
-        var val = proxy.value;
-        for (var i = 0; i < val.length; i++) { sendChar(emulator, val[i]); }
-        proxy.value = "";
       });
     });
   </script>

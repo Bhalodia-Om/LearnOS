@@ -1,0 +1,22 @@
+This lesson sets up interrupts. We build our own IDT (Interrupt Descriptor Table), the sibling of the GDT from lesson 9. Where the GDT told the CPU how memory is split, the IDT tells the CPU what to do when an interruption happens.
+
+Right now the OS polls the keyboard (a loop that constantly asks "any key yet?"). Interrupts flip that around: the hardware tells the CPU when something happens, the CPU runs a handler to handle the interrupt. 
+This lesson sets us up for the next lesson, where the keyboard actually moves onto interrupts.
+
+We prove the IDT works by handling CPU exceptions (interrupts 0-31, the errors the CPU raises itself, like divide-by-zero). Instead of the machine faulting and rebooting on an error, our handler catches it and prints which exception fired.
+
+New concepts:
+- What an interrupt is, and the difference between a CPU exception (0-31) and a hardware IRQ (later).
+- The IDT: 256 slots, each holding the address of a handler + some flags.
+- Assembly stubs: small routines the CPU uses when an interrupt fires, which then call our C++ handler. We need this because the CPU enters an interrupt in a special way that plain C++ can't set up.
+- outb (write a byte to a port), added to io.h alongside inb.
+
+Files changed / added:
+- idt.h / idt.cpp   (the table, the loader, and the C++ exception handler)
+- idt_stubs.s       (assembly catchers, one per exception, that call into C++)
+- io.h              (add outb)
+- kernel.cpp        (call idt_init() after gdt_init(), then trigger a test exception)
+
+WARNING: a wrong IDT entry can triple-fault (instant reboot loop, without an error).
+Success = the OS boots, and triggering divide-by-zero prints our exception message
+instead of rebooting.
